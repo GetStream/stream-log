@@ -42,3 +42,5 @@ dependencyUpdates {
         Dependencies.isStable(it.currentVersion) && Dependencies.isNonStable(it.candidate.version)
     }
 }
+
+apply from: "${rootDir}/scripts/publish-root.gradle"

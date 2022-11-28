@@ -1,0 +1,11 @@
+import io.getstream.log.Configuration
+
+android {
+    compileSdk Configuration.compileSdk
+
+    defaultConfig {
+        minSdk Configuration.minSdk
+        targetSdk Configuration.targetSdk
+        versionName Configuration.versionName
+    }
+}
