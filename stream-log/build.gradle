@@ -1,0 +1,33 @@
+import io.getstream.log.Configuration
+import io.getstream.log.Dependencies
+
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+ext {
+    PUBLISH_GROUP_ID = Configuration.artifactGroup
+    PUBLISH_ARTIFACT_ID = 'stream-log'
+    PUBLISH_VERSION = rootVersionName
+}
+
+apply from: "${rootDir}/scripts/publish-module.gradle"
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += [
+                '-progressive',
+                '-Xexplicit-api=strict',
+        ]
+    }
+}
+
+dependencies {
+    testImplementation Dependencies.junit4
+    detektPlugins(Dependencies.detektFormatting)
+}
