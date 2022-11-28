@@ -1,3 +1,6 @@
+import io.getstream.log.Configuration
+import io.getstream.log.Dependencies
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -5,14 +8,14 @@ plugins {
 
 android {
     namespace 'io.getstream.log.sample'
-    compileSdk 32
+    compileSdk Configuration.compileSdk
 
     defaultConfig {
         applicationId "io.getstream.log.sample"
-        minSdk 21
-        targetSdk 32
+        minSdk Configuration.minSdk
+        targetSdk Configuration.targetSdk
         versionCode 1
-        versionName "1.0"
+        versionName Configuration.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,10 +37,12 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    implementation Dependencies.androidxCoreKtx
+    implementation Dependencies.androidxAppCompat
+    implementation Dependencies.materialComponents
+    testImplementation Dependencies.junit4
+    androidTestImplementation Dependencies.androidxTestJunit
+    androidTestImplementation Dependencies.espressoCore
+
+    detektPlugins(Dependencies.detektFormatting)
 }
