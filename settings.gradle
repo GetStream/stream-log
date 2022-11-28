@@ -16,3 +16,4 @@ rootProject.name = "Log"
 include ':app'
 include ':stream-log'
 include ':stream-log-android'
+include ':stream-log-file'
