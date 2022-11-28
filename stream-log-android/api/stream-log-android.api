@@ -1,0 +1,12 @@
+public final class io/getstream/log/android/AndroidStreamLogger : io/getstream/log/StreamLogger {
+	public fun <init> ()V
+	public fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+
+public final class io/getstream/log/android/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
