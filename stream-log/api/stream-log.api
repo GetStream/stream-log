@@ -80,7 +80,7 @@ public final class io/getstream/log/helper/StringifyKt {
 	public static final fun stringify (Ljava/lang/Throwable;)Ljava/lang/String;
 }
 
-public final class io/getstream/log/kotlin/KotlinStreamLogger : io/getstream/log/StreamLogger {
+public class io/getstream/log/kotlin/KotlinStreamLogger : io/getstream/log/StreamLogger {
 	public fun <init> ()V
 	public fun <init> (Ljava/text/DateFormat;Lkotlin/jvm/functions/Function0;)V
 	public synthetic fun <init> (Ljava/text/DateFormat;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
