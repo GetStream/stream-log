@@ -16,6 +16,7 @@
 
 package io.getstream.log
 
+import io.getstream.log.Priority.ASSERT
 import io.getstream.log.Priority.DEBUG
 import io.getstream.log.Priority.ERROR
 import io.getstream.log.Priority.INFO
@@ -31,6 +32,7 @@ import io.getstream.log.Priority.WARN
  * The order in terms of verbosity, from least to most is [ERROR], [WARN], [INFO], [DEBUG], [VERBOSE].
  *
  */
+@Suppress("TooManyFunctions")
 public object StreamLog {
 
     /**
@@ -155,6 +157,43 @@ public object StreamLog {
     public inline fun v(tag: String, message: () -> String) {
         if (internalValidator.isLoggable(VERBOSE, tag)) {
             internalLogger.log(VERBOSE, tag, message())
+        }
+    }
+
+    /**
+     * Send a [ASSERT] log message.
+     *
+     * @param tag Used to identify the source of a log message.
+     * @param message The function returning a message you would like logged.
+     */
+    @JvmStatic
+    public inline fun a(tag: String, message: () -> String) {
+        if (internalValidator.isLoggable(ASSERT, tag)) {
+            internalLogger.log(ASSERT, tag, message())
+        }
+    }
+
+    /**
+     * Send a log message according to the [priority].
+     *
+     * @param priority The priority/type of this log message.
+     * @param tag Used to identify the source of a log message.
+     * @param message The function returning a message you would like logged.
+     * @param throwable An exception to log.
+     */
+    @JvmStatic
+    public inline fun log(priority: Priority, tag: String, throwable: Throwable? = null, message: () -> String) {
+        if (throwable != null) {
+            e(tag, throwable, message)
+        } else {
+            when (priority) {
+                VERBOSE -> v(tag, message)
+                DEBUG -> d(tag, message)
+                INFO -> i(tag, message)
+                WARN -> w(tag, message)
+                ERROR -> e(tag, message)
+                ASSERT -> a(tag, message)
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ public enum class Priority(
     /** Priority for the [StreamLogger.log] method; use [StreamLog.e]. */
     ERROR(level = 6),
 
-    /** Priority for the [StreamLogger.log] method. */
+    /** Priority for the [StreamLogger.log] method; use [StreamLog.a]. */
     ASSERT(level = 7),
 }
 
@@ -65,5 +65,6 @@ public enum class Priority(
  */
 public object SilentStreamLogger : StreamLogger {
 
-    override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) { /* no-op */ }
+    override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) { /* no-op */
+    }
 }

@@ -27,6 +27,7 @@ public final class io/getstream/log/SilentStreamLogger : io/getstream/log/Stream
 
 public final class io/getstream/log/StreamLog {
 	public static final field INSTANCE Lio/getstream/log/StreamLog;
+	public static final fun a (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun d (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun e (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static final fun e (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
@@ -35,10 +36,20 @@ public final class io/getstream/log/StreamLog {
 	public static final fun getLogger (Ljava/lang/String;)Lio/getstream/log/TaggedLogger;
 	public static final fun i (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun inspect (Lkotlin/jvm/functions/Function1;)Z
+	public static final fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun log$default (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 	public static final fun setLogger (Lio/getstream/log/StreamLogger;)V
 	public static final fun setValidator (Lio/getstream/log/IsLoggableValidator;)V
 	public static final fun v (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun w (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class io/getstream/log/StreamLogExtensionKt {
+	public static final fun outerClassSimpleTagName (Ljava/lang/Object;)Ljava/lang/String;
+	public static final fun streamLog (Ljava/lang/Object;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun streamLog$default (Ljava/lang/Object;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public static final fun taggedLogger (Ljava/lang/Object;Ljava/lang/String;)Lkotlin/Lazy;
+	public static synthetic fun taggedLogger$default (Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lkotlin/Lazy;
 }
 
 public abstract interface class io/getstream/log/StreamLogger {
