@@ -26,6 +26,10 @@ buildscript {
     }
 }
 
+apiValidation {
+    ignoredProjects += ["app"]
+}
+
 subprojects {
     if (it.buildFile.exists()) {
         apply from: "${rootDir}/spotless/spotless.gradle"
