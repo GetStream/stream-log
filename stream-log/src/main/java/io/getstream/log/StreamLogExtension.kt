@@ -49,10 +49,8 @@ public inline fun Any.streamLog(
     StreamLog.log(priority, tagOrCaller, throwable, message)
 }
 
-/** https://github.com/square/logcat/blob/main/logcat/src/main/java/logcat/Logcat.kt#L87 **/
 @PublishedApi
 internal fun Any.outerClassSimpleTagName(): String {
-
     val javaClass = this::class.java
     val fullClassName = javaClass.name
     val outerClassName = fullClassName.substringBefore('$')

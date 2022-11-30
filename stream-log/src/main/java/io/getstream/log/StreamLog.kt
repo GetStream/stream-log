@@ -78,7 +78,10 @@ public object StreamLog {
      * @return [TaggedLogger] Tagged logger.
      */
     @JvmStatic
-    public fun getLogger(tag: String): TaggedLogger = TaggedLogger(tag, internalLogger, internalValidator)
+    public fun getLogger(tag: String? = null): TaggedLogger {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        return TaggedLogger(tagOrCaller, internalLogger, internalValidator)
+    }
 
     /**
      * Send a [ERROR] log message.
@@ -88,9 +91,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun e(tag: String, throwable: Throwable, message: () -> String) {
-        if (internalValidator.isLoggable(ERROR, tag)) {
-            internalLogger.log(ERROR, tag, message(), throwable)
+    public inline fun e(tag: String? = null, throwable: Throwable? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(ERROR, tagOrCaller)) {
+            internalLogger.log(ERROR, tagOrCaller, message(), throwable)
         }
     }
 
@@ -101,9 +105,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun e(tag: String, message: () -> String) {
-        if (internalValidator.isLoggable(ERROR, tag)) {
-            internalLogger.log(ERROR, tag, message())
+    public inline fun e(tag: String? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(ERROR, tagOrCaller)) {
+            internalLogger.log(ERROR, tagOrCaller, message())
         }
     }
 
@@ -114,9 +119,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun w(tag: String, message: () -> String) {
-        if (internalValidator.isLoggable(WARN, tag)) {
-            internalLogger.log(WARN, tag, message())
+    public inline fun w(tag: String? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(WARN, tagOrCaller)) {
+            internalLogger.log(WARN, tagOrCaller, message())
         }
     }
 
@@ -127,9 +133,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun i(tag: String, message: () -> String) {
-        if (internalValidator.isLoggable(INFO, tag)) {
-            internalLogger.log(INFO, tag, message())
+    public inline fun i(tag: String? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(INFO, tagOrCaller)) {
+            internalLogger.log(INFO, tagOrCaller, message())
         }
     }
 
@@ -140,9 +147,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun d(tag: String, message: () -> String) {
-        if (internalValidator.isLoggable(DEBUG, tag)) {
-            internalLogger.log(DEBUG, tag, message())
+    public inline fun d(tag: String? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(DEBUG, tagOrCaller)) {
+            internalLogger.log(DEBUG, tagOrCaller, message())
         }
     }
 
@@ -153,9 +161,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun v(tag: String, message: () -> String) {
-        if (internalValidator.isLoggable(VERBOSE, tag)) {
-            internalLogger.log(VERBOSE, tag, message())
+    public inline fun v(tag: String? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(VERBOSE, tagOrCaller)) {
+            internalLogger.log(VERBOSE, tagOrCaller, message())
         }
     }
 
@@ -166,9 +175,10 @@ public object StreamLog {
      * @param message The function returning a message you would like logged.
      */
     @JvmStatic
-    public inline fun a(tag: String, message: () -> String) {
-        if (internalValidator.isLoggable(ASSERT, tag)) {
-            internalLogger.log(ASSERT, tag, message())
+    public inline fun a(tag: String? = null, message: () -> String) {
+        val tagOrCaller = tag ?: outerClassSimpleTagName()
+        if (internalValidator.isLoggable(ASSERT, tagOrCaller)) {
+            internalLogger.log(ASSERT, tagOrCaller, message())
         }
     }
 
