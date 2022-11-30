@@ -19,18 +19,16 @@ package io.getstream.log.sample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import io.getstream.log.StreamLog
 import io.getstream.log.sample.theme.SampleTheme
 import io.getstream.log.sample.ui.Main
+import io.getstream.log.streamLog
 
 class MainActivity : ComponentActivity() {
-
-    private val logger = StreamLog.getLogger("Main")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logger.d { "onCreate MainActivity" }
+        streamLog { "onCreate MainActivity" }
 
         setContent { SampleTheme { Main() } }
     }

@@ -23,17 +23,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import io.getstream.log.StreamLog
+import io.getstream.log.streamLog
 
 @Composable
 fun Main() {
     Box(modifier = Modifier.fillMaxSize()) {
         Button(
             modifier = Modifier.align(Alignment.Center),
-            onClick = {
-                val logger = StreamLog.getLogger("Main")
-                logger.d { "Button clicked" }
-            }
+            onClick = { streamLog { "Button Clicked!" } }
         ) {
             Text(text = "Log")
         }
