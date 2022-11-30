@@ -15,28 +15,6 @@ apply from: "${rootDir}/scripts/publish-module.gradle"
 apply from: "${rootDir}/scripts/android.gradle"
 
 android {
-    defaultConfig {
-        vectorDrawables.useSupportLibrary = true
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-            unitTests.returnDefaultValues = true
-            // Show the result of every unit test, even if it passes.
-            all {
-                testLogging {
-                    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-                }
-            }
-        }
-    }
-
-    sourceSets {
-        all {
-            it.java.srcDir "src/$it.name/kotlin"
-        }
-    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -51,15 +29,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 dependencies {
     implementation project(":stream-log")
 
-    implementation Dependencies.androidxActivityKtx
     implementation Dependencies.androidxAnnotations
-    implementation Dependencies.androidxAppCompat
-    implementation Dependencies.androidxRecyclerview
-    implementation Dependencies.androidxStartup
-    implementation Dependencies.constraintLayout
-    implementation Dependencies.materialComponents
-    implementation Dependencies.androidxLifecycleLiveDataKtx
-
 
     testImplementation Dependencies.junitJupiterApi
     testImplementation Dependencies.junitJupiterParams
