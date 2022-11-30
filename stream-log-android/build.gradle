@@ -36,12 +36,9 @@ dependencies {
     testRuntimeOnly Dependencies.junitJupiterEngine
     testRuntimeOnly Dependencies.junitVintageEngine
 
-    testImplementation Dependencies.androidxArchCoreTest
     testImplementation Dependencies.testParameterInjector
-    testImplementation Dependencies.kluent
     testImplementation Dependencies.mockito
     testImplementation Dependencies.mockitoKotlin
-    testImplementation Dependencies.coroutinesTest
 
     detektPlugins(Dependencies.detektFormatting)
 }
