@@ -36,11 +36,21 @@ import io.getstream.log.Priority.WARN
 public object StreamLog {
 
     /**
+     * Let you know if the internal StreamLogger instance used for logs has been initialized or it is using the
+     * default one
+     */
+    public var defaultLoggerOverridden: Boolean = false
+        private set
+
+    /**
      * [StreamLogger] implementation to be used.
      */
     @PublishedApi
     internal var internalLogger: StreamLogger = ErrorStreamLogger
-        private set
+        private set(value) {
+            defaultLoggerOverridden = true
+            field = value
+        }
 
     /**
      * [IsLoggableValidator] implementation to be used.
@@ -50,14 +60,6 @@ public object StreamLog {
         priority.level >= ERROR.level
     }
         private set
-
-    /**
-     * Tests a [condition] on specified [internalLogger] implementation.
-     */
-    @JvmStatic
-    public inline fun inspect(condition: (logger: StreamLogger) -> Boolean): Boolean {
-        return condition(internalLogger)
-    }
 
     /**
      * Sets a [StreamLogger] implementation to be used.
