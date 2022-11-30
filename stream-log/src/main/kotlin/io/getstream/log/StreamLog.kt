@@ -39,14 +39,16 @@ public object StreamLog {
      * [StreamLogger] implementation to be used.
      */
     @PublishedApi
-    internal var internalLogger: StreamLogger = SilentStreamLogger
+    internal var internalLogger: StreamLogger = ErrorStreamLogger
         private set
 
     /**
      * [IsLoggableValidator] implementation to be used.
      */
     @PublishedApi
-    internal var internalValidator: IsLoggableValidator = IsLoggableValidator { _, _ -> false }
+    internal var internalValidator: IsLoggableValidator = IsLoggableValidator { priority, _ ->
+        priority.level >= ERROR.level
+    }
         private set
 
     /**
