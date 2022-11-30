@@ -32,6 +32,7 @@ import io.getstream.log.Priority.WARN
  * The order in terms of verbosity, from least to most is [ERROR], [WARN], [INFO], [DEBUG], [VERBOSE].
  *
  */
+@Suppress("TooManyFunctions")
 public object StreamLog {
 
     /**
