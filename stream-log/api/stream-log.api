@@ -48,6 +48,8 @@ public final class io/getstream/log/StreamLogExtensionKt {
 	public static final fun outerClassSimpleTagName (Ljava/lang/Object;)Ljava/lang/String;
 	public static final fun streamLog (Ljava/lang/Object;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun streamLog$default (Ljava/lang/Object;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public static final fun taggedLogger (Ljava/lang/Object;Ljava/lang/String;)Lkotlin/Lazy;
+	public static synthetic fun taggedLogger$default (Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lkotlin/Lazy;
 }
 
 public abstract interface class io/getstream/log/StreamLogger {

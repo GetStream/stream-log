@@ -49,6 +49,28 @@ public inline fun Any.streamLog(
     StreamLog.log(priority, tagOrCaller, throwable, message)
 }
 
+/**
+ * Return [TaggedLogger] lazily.
+ *
+ * @param tag Used to identify the source of a log message.
+ *
+ * ```
+ * class MainController {
+ *
+ *   val logger by taggedLogger()
+ *
+ *   fun onItemClicked() {
+ *     logger.d { "item clicked" }
+ *   }
+ * }
+ */
+public fun Any.taggedLogger(
+    tag: String? = null,
+): Lazy<TaggedLogger> {
+    val tagOrCaller = tag ?: outerClassSimpleTagName()
+    return lazy { StreamLog.getLogger(tagOrCaller) }
+}
+
 @PublishedApi
 internal fun Any.outerClassSimpleTagName(): String {
     val javaClass = this::class.java
