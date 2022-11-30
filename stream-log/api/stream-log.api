@@ -31,11 +31,11 @@ public final class io/getstream/log/StreamLog {
 	public static final fun d (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun e (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static final fun e (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public final fun getDefaultLoggerOverridden ()Z
 	public final fun getInternalLogger ()Lio/getstream/log/StreamLogger;
 	public final fun getInternalValidator ()Lio/getstream/log/IsLoggableValidator;
 	public static final fun getLogger (Ljava/lang/String;)Lio/getstream/log/TaggedLogger;
 	public static final fun i (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-	public static final fun inspect (Lkotlin/jvm/functions/Function1;)Z
 	public static final fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun log$default (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 	public static final fun setLogger (Lio/getstream/log/StreamLogger;)V
@@ -80,7 +80,7 @@ public final class io/getstream/log/helper/StringifyKt {
 	public static final fun stringify (Ljava/lang/Throwable;)Ljava/lang/String;
 }
 
-public final class io/getstream/log/kotlin/KotlinStreamLogger : io/getstream/log/StreamLogger {
+public class io/getstream/log/kotlin/KotlinStreamLogger : io/getstream/log/StreamLogger {
 	public fun <init> ()V
 	public fun <init> (Ljava/text/DateFormat;Lkotlin/jvm/functions/Function0;)V
 	public synthetic fun <init> (Ljava/text/DateFormat;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
