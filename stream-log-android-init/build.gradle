@@ -53,15 +53,7 @@ dependencies {
     implementation project(":stream-log-file")
     implementation project(":stream-log-android")
 
-    implementation Dependencies.androidxActivityKtx
-    implementation Dependencies.androidxAnnotations
-    implementation Dependencies.androidxAppCompat
-    implementation Dependencies.androidxRecyclerview
-    implementation Dependencies.androidxStartup
-    implementation Dependencies.constraintLayout
-    implementation Dependencies.materialComponents
-    implementation Dependencies.androidxLifecycleLiveDataKtx
-
+    implementation Dependencies.androidxCoreKtx
 
     testImplementation Dependencies.junitJupiterApi
     testImplementation Dependencies.junitJupiterParams
