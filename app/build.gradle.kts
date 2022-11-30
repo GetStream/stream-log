@@ -50,6 +50,4 @@ dependencies {
 
     testImplementation(Dependencies.junit4)
     androidTestImplementation(Dependencies.androidxTestJunit)
-
-    detektPlugins(Dependencies.detektFormatting)
 }
