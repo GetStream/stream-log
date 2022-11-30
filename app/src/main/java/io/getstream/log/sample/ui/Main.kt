@@ -16,10 +16,26 @@
 
 package io.getstream.log.sample.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import io.getstream.log.StreamLog
 
 @Composable
 fun Main() {
-    Text(text = "Hello, Stream log sample!")
+    Box(modifier = Modifier.fillMaxSize()) {
+        Button(
+            modifier = Modifier.align(Alignment.Center),
+            onClick = {
+                val logger = StreamLog.getLogger("Main")
+                logger.d { "Button clicked" }
+            }
+        ) {
+            Text(text = "Log")
+        }
+    }
 }
