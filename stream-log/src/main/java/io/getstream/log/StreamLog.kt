@@ -178,16 +178,21 @@ public object StreamLog {
      * @param priority The priority/type of this log message.
      * @param tag Used to identify the source of a log message.
      * @param message The function returning a message you would like logged.
+     * @param throwable An exception to log.
      */
     @JvmStatic
-    public inline fun log(priority: Priority, tag: String, message: () -> String) {
-        when (priority) {
-            VERBOSE -> v(tag, message)
-            DEBUG -> d(tag, message)
-            INFO -> i(tag, message)
-            WARN -> w(tag, message)
-            ERROR -> e(tag, message)
-            ASSERT -> a(tag, message)
+    public inline fun log(priority: Priority, tag: String, throwable: Throwable? = null, message: () -> String) {
+        if (throwable != null) {
+            e(tag, throwable, message)
+        } else {
+            when (priority) {
+                VERBOSE -> v(tag, message)
+                DEBUG -> d(tag, message)
+                INFO -> i(tag, message)
+                WARN -> w(tag, message)
+                ERROR -> e(tag, message)
+                ASSERT -> a(tag, message)
+            }
         }
     }
 }
