@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat
 
 private const val ACTION_SHARE = "io.getstream.log.android.SHARE"
 private const val ACTION_CLEAR = "io.getstream.log.android.CLEAR"
+private const val NOTIFICATION_ID = 1004
 
 /**
  * The service handles adb commands to share/clear the log file.
@@ -64,7 +65,7 @@ public class StreamLogFileService : Service() {
 
         val notification = notificationBuilder.build()
 
-        startForeground(1004, notification)
+        startForeground(NOTIFICATION_ID, notification)
     }
 
     override fun onBind(intent: Intent): IBinder? {
