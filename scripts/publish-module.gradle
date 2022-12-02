@@ -50,7 +50,7 @@ afterEvaluate {
 
                 pom {
                     name = PUBLISH_ARTIFACT_ID
-                    description = 'A lightweight logging library for Kotlin and Android.'
+                    description = 'A lightweight and extensible logger library for Kotlin and Android.'
                     url = 'https://github.com/getstream/stream-log'
                     licenses {
                         license {
