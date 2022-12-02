@@ -17,6 +17,9 @@
 package io.getstream.log.sample
 
 import android.app.Application
+import io.getstream.log.IsLoggableValidator
+import io.getstream.log.Priority
+import io.getstream.log.StreamLog
 import io.getstream.log.android.AndroidStreamLogger
 
 class App : Application() {
@@ -25,5 +28,11 @@ class App : Application() {
         super.onCreate()
 
         AndroidStreamLogger.installOnDebuggableApp(this)
+
+        StreamLog.setValidator { priority, tag ->
+            priority.level >= Priority.DEBUG.level
+
+            tag.contains("main")
+        }
     }
 }
