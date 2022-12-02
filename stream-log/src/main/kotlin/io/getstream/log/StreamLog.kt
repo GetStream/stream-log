@@ -87,6 +87,7 @@ public object StreamLog {
     public fun unInstall() {
         synchronized(this) {
             internalLogger = SilentStreamLogger
+            isInstalled = false
         }
     }
 
