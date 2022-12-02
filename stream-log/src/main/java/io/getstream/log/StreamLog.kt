@@ -96,7 +96,9 @@ public object StreamLog {
      */
     @JvmStatic
     public fun setValidator(validator: IsLoggableValidator) {
-        internalValidator = validator
+        synchronized(this) {
+            internalValidator = validator
+        }
     }
 
     /**

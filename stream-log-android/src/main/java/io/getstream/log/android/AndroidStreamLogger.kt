@@ -26,20 +26,22 @@ import io.getstream.log.StreamLog
 import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
 
-private const val MAX_TAG_LEN = 23
-
 /**
  * The [StreamLogger] implementation for Android.
  *
  * This logger traces the current thread on Android and following the Android log priorities.
+ *
+ * @property maxTagLength The maximum length size of the tag.
  */
-public class AndroidStreamLogger : StreamLogger {
+public class AndroidStreamLogger constructor(
+    private val maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+) : StreamLogger {
 
     override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
 
         val androidPriority = priority.toAndroidPriority()
-        val androidTag = tag.takeIf { it.length > MAX_TAG_LEN && !isNougatOrHigher() }
-            ?.substring(0, MAX_TAG_LEN)
+        val androidTag = tag.takeIf { it.length > maxTagLength && !isNougatOrHigher() }
+            ?.substring(0, maxTagLength)
             ?: tag
 
         val thread = Thread.currentThread().run { "$name:$id" }
@@ -72,18 +74,29 @@ public class AndroidStreamLogger : StreamLogger {
 
         /**
          * Install a new [AndroidStreamLogger] if the application is debuggable.
+         *
+         * @param application Application.
+         * @param maxTagLength The maximum length size of the tag.
          */
-        public fun installOnDebuggableApp(application: Application) {
+        public fun installOnDebuggableApp(application: Application, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
             if (!StreamLog.isInstalled && application.isDebuggableApp) {
-                StreamLog.install(AndroidStreamLogger())
+                StreamLog.install(
+                    AndroidStreamLogger(maxTagLength = maxTagLength)
+                )
             }
         }
 
         /**
          * Install a new [AndroidStreamLogger].
+         *
+         * @param maxTagLength The maximum length size of the tag.
          */
-        public fun install() {
-            StreamLog.install(AndroidStreamLogger())
+        public fun install(maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+            StreamLog.install(
+                AndroidStreamLogger(maxTagLength = maxTagLength)
+            )
         }
+
+        internal const val DEFAULT_MAX_TAG_LENGTH = 23
     }
 }
