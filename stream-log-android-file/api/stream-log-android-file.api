@@ -28,6 +28,7 @@ public final class io/getstream/log/android/file/StreamLogFileProvider : android
 public final class io/getstream/log/android/file/StreamLogFileService : android/app/Service {
 	public fun <init> ()V
 	public fun onBind (Landroid/content/Intent;)Landroid/os/IBinder;
+	public fun onCreate ()V
 	public fun onStartCommand (Landroid/content/Intent;II)I
 }
 
