@@ -28,7 +28,7 @@ import java.util.Locale
 /**
  * The [StreamLogger] implementation for kotlin projects. Mainly used in Unit Tests.
  */
-public class KotlinStreamLogger(
+public open class KotlinStreamLogger(
     private val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss''SSS", Locale.ENGLISH),
     private val now: () -> Long = { System.currentTimeMillis() }
 ) : StreamLogger {

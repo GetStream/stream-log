@@ -26,11 +26,17 @@ buildscript {
     }
 }
 
+apiValidation {
+    ignoredProjects += ["app"]
+}
+
 subprojects {
     if (it.buildFile.exists()) {
         apply from: "${rootDir}/spotless/spotless.gradle"
     }
-    apply plugin: "io.gitlab.arturbosch.detekt"
+    if (it.name != 'app') {
+        apply plugin: "io.gitlab.arturbosch.detekt"
+    }
 }
 
 task clean(type: Delete) {
