@@ -38,13 +38,22 @@ public object StreamLog {
     /**
      * [StreamLogger] implementation to be used.
      */
+    @Volatile
     @PublishedApi
     internal var internalLogger: StreamLogger = SilentStreamLogger
         private set
 
     /**
+     * Represent a [StreamLogger] is already installed or not.
+     */
+    @JvmStatic
+    public inline val isInstalled: Boolean
+        get() = internalLogger != SilentStreamLogger
+
+    /**
      * [IsLoggableValidator] implementation to be used.
      */
+    @Volatile
     @PublishedApi
     internal var internalValidator: IsLoggableValidator = IsLoggableValidator { _, _ -> false }
         private set
@@ -58,11 +67,28 @@ public object StreamLog {
     }
 
     /**
-     * Sets a [StreamLogger] implementation to be used.
+     * Installs a new [StreamLogger] implementation to be used.
      */
     @JvmStatic
-    public fun setLogger(logger: StreamLogger) {
-        internalLogger = logger
+    public fun install(logger: StreamLogger) {
+        synchronized(this) {
+            if (isInstalled) {
+                e("StreamLog") {
+                    "The logger $internalLogger is already installed but you've tried to install a new logger: $logger"
+                }
+            }
+            internalLogger = logger
+        }
+    }
+
+    /**
+     * Uninstall a previous [StreamLogger] implementation.
+     */
+    @JvmStatic
+    public fun unInstall() {
+        synchronized(this) {
+            internalLogger = SilentStreamLogger
+        }
     }
 
     /**

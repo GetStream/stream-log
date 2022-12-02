@@ -36,10 +36,12 @@ public final class io/getstream/log/StreamLog {
 	public static final fun getLogger (Ljava/lang/String;)Lio/getstream/log/TaggedLogger;
 	public static final fun i (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun inspect (Lkotlin/jvm/functions/Function1;)Z
+	public static final fun install (Lio/getstream/log/StreamLogger;)V
+	public static final fun isInstalled ()Z
 	public static final fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun log$default (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
-	public static final fun setLogger (Lio/getstream/log/StreamLogger;)V
 	public static final fun setValidator (Lio/getstream/log/IsLoggableValidator;)V
+	public static final fun unInstall ()V
 	public static final fun v (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun w (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 }

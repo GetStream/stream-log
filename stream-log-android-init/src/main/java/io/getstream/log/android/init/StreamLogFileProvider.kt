@@ -59,7 +59,7 @@ public class StreamLogFileProvider : FileProvider() {
 
         val compositeLogger = CompositeStreamLogger(androidLogger, fileLogger)
         val fileManager = LifecycleAwareLogFileManager(fileLogger)
-        StreamLog.setLogger(compositeLogger)
+        StreamLog.install(compositeLogger)
         StreamLog.setValidator { _, _ -> true }
 
         StreamLogFileManager.init(fileManager, fileManager)

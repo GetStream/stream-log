@@ -16,17 +16,22 @@
 
 package io.getstream.log.android
 
+import android.app.Application
+import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
 import io.getstream.log.Priority
+import io.getstream.log.StreamLog
 import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
 
 private const val MAX_TAG_LEN = 23
 
 /**
- * The [StreamLogger] implementation for android projects.
+ * The [StreamLogger] implementation for Android.
+ *
+ * This logger traces the current thread on Android and following the Android log priorities.
  */
 public class AndroidStreamLogger : StreamLogger {
 
@@ -60,4 +65,25 @@ public class AndroidStreamLogger : StreamLogger {
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
     private fun isNougatOrHigher() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+
+    public companion object {
+        private val Application.isDebuggableApp: Boolean
+            get() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+
+        /**
+         * Install a new [AndroidStreamLogger] if the application is debuggable.
+         */
+        public fun installOnDebuggableApp(application: Application) {
+            if (!StreamLog.isInstalled && application.isDebuggableApp) {
+                StreamLog.install(AndroidStreamLogger())
+            }
+        }
+
+        /**
+         * Install a new [AndroidStreamLogger].
+         */
+        public fun install() {
+            StreamLog.install(AndroidStreamLogger())
+        }
+    }
 }
