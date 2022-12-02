@@ -50,7 +50,7 @@ afterEvaluate {
 
                 pom {
                     name = PUBLISH_ARTIFACT_ID
-                    description = 'Stream Log SDK'
+                    description = 'A lightweight logging library for Kotlin and Android.'
                     url = 'https://github.com/getstream/stream-log'
                     licenses {
                         license {
@@ -59,6 +59,11 @@ afterEvaluate {
                         }
                     }
                     developers {
+                        developer {
+                            id = 'skydoves'
+                            name = 'Jaewoong'
+                            email = 'jaewoong.eum@getstream.io'
+                        }
                         developer {
                             id = 'jcminarro'
                             name = 'Jc Miñarro'
