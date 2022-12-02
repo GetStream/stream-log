@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
  *
- * Licensed under the Stream License;
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    https://github.com/GetStream/stream-log/blob/main/LICENSE
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,25 +36,29 @@ import io.getstream.log.Priority.WARN
 public object StreamLog {
 
     /**
+     * Represent a [StreamLogger] is already installed or not.
      * Let you know if the internal StreamLogger instance used for logs has been initialized or it is using the
-     * default one
+     * default one.
      */
-    public var defaultLoggerOverridden: Boolean = false
+    @JvmStatic
+    public var isInstalled: Boolean = false
         private set
 
     /**
      * [StreamLogger] implementation to be used.
      */
+    @Volatile
     @PublishedApi
     internal var internalLogger: StreamLogger = ErrorStreamLogger
         private set(value) {
-            defaultLoggerOverridden = true
+            isInstalled = true
             field = value
         }
 
     /**
      * [IsLoggableValidator] implementation to be used.
      */
+    @Volatile
     @PublishedApi
     internal var internalValidator: IsLoggableValidator = IsLoggableValidator { priority, _ ->
         priority.level >= ERROR.level
@@ -62,11 +66,29 @@ public object StreamLog {
         private set
 
     /**
-     * Sets a [StreamLogger] implementation to be used.
+     * Installs a new [StreamLogger] implementation to be used.
      */
     @JvmStatic
-    public fun setLogger(logger: StreamLogger) {
-        internalLogger = logger
+    public fun install(logger: StreamLogger) {
+        synchronized(this) {
+            if (isInstalled) {
+                e("StreamLog") {
+                    "The logger $internalLogger is already installed but you've tried to install a new logger: $logger"
+                }
+            }
+            internalLogger = logger
+        }
+    }
+
+    /**
+     * Uninstall a previous [StreamLogger] implementation.
+     */
+    @JvmStatic
+    public fun unInstall() {
+        synchronized(this) {
+            internalLogger = SilentStreamLogger
+            isInstalled = false
+        }
     }
 
     /**
@@ -74,7 +96,9 @@ public object StreamLog {
      */
     @JvmStatic
     public fun setValidator(validator: IsLoggableValidator) {
-        internalValidator = validator
+        synchronized(this) {
+            internalValidator = validator
+        }
     }
 
     /**

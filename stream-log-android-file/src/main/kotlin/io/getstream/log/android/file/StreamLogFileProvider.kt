@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
  *
- * Licensed under the Stream License;
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    https://github.com/GetStream/stream-log/blob/main/LICENSE
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.getstream.log.android.init
+package io.getstream.log.android.file
 
 import android.app.Application
 import android.content.Context
@@ -25,7 +25,7 @@ import androidx.core.content.FileProvider
 import io.getstream.log.CompositeStreamLogger
 import io.getstream.log.StreamLog
 import io.getstream.log.android.AndroidStreamLogger
-import io.getstream.log.android.init.impl.LifecycleAwareLogFileManager
+import io.getstream.log.android.file.impl.LifecycleAwareLogFileManager
 import io.getstream.log.file.FileStreamLogger
 
 /**
@@ -59,7 +59,7 @@ public class StreamLogFileProvider : FileProvider() {
 
         val compositeLogger = CompositeStreamLogger(androidLogger, fileLogger)
         val fileManager = LifecycleAwareLogFileManager(fileLogger)
-        StreamLog.setLogger(compositeLogger)
+        StreamLog.install(compositeLogger)
         StreamLog.setValidator { _, _ -> true }
 
         StreamLogFileManager.init(fileManager, fileManager)
