@@ -16,17 +16,57 @@
 
 package io.getstream.log.android.file
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 
-private const val ACTION_SHARE = "io.getstream.logging.android.SHARE"
-private const val ACTION_CLEAR = "io.getstream.logging.android.CLEAR"
+private const val ACTION_SHARE = "io.getstream.log.android.SHARE"
+private const val ACTION_CLEAR = "io.getstream.log.android.CLEAR"
+private const val NOTIFICATION_ID = 1004
 
 /**
  * The service handles adb commands to share/clear the log file.
+ *
+ * You can share the runtime logging messages following the methods below:
+ *
+ * 1. adb shell am start-foreground-service -a io.getstream.log.android.CLEAR
+ * 2. adb shell am start-foreground-service -a io.getstream.log.android.SHARE
+ * 3. adb shell am stopservice -a io.getstream.log.android.SHARE
  */
 public class StreamLogFileService : Service() {
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate() {
+        super.onCreate()
+
+        val channelId = "io.getstream.log.android.file"
+        val channelName = "Stream Log File Service"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId, channelName,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.stream_logo)
+            .setContentTitle("Stream Log File Service")
+            .setContentText("Starting Stream Log File Service...")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_CALL)
+
+        val notification = notificationBuilder.build()
+
+        startForeground(NOTIFICATION_ID, notification)
+    }
 
     override fun onBind(intent: Intent): IBinder? {
         return null
