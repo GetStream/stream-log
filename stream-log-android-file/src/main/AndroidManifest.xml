@@ -15,13 +15,15 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.getstream.log.android.init"
+    package="io.getstream.log.android.file"
     >
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application>
 
         <service
-            android:name="io.getstream.log.android.init.StreamLogFileService"
+            android:name=".StreamLogFileService"
             android:enabled="true"
             android:exported="true"
             >
@@ -37,7 +39,7 @@
         </service>
 
         <provider
-            android:name="io.getstream.log.android.init.StreamLogFileProvider"
+            android:name=".StreamLogFileProvider"
             android:authorities="${applicationId}.streamlogfileprovider"
             android:exported="false"
             android:grantUriPermissions="true"

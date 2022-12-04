@@ -49,7 +49,7 @@ public object StreamLog {
      */
     @Volatile
     @PublishedApi
-    internal var internalLogger: StreamLogger = SilentStreamLogger
+    internal var internalLogger: StreamLogger = ErrorStreamLogger
         private set(value) {
             isInstalled = true
             field = value
@@ -87,6 +87,7 @@ public object StreamLog {
     public fun unInstall() {
         synchronized(this) {
             internalLogger = SilentStreamLogger
+            isInstalled = false
         }
     }
 
