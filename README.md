@@ -11,6 +11,9 @@
 🛥 Stream Log is a lightweight and extensible logger library for Kotlin and Android.
 </p>
 
+## Why Stream Log?
+**Stream Log** has originated from [stream-chat-android](https://github.com/getStream/stream-chat-android) and it has been already verified as used by billions of global end-users across thousands of different apps. It's simple and easy to use. You can also record and extract the runtime log messages into an external `.txt` file and utilize it to trace your log messages.
+
 <img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
 
 ## Stream Log
@@ -123,6 +126,8 @@ StreamLog.setValidator { priority, tag ->
 }
 ```
 
+<img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
+
 ## Stream Log File
 
 **Stream Log File** is an extension library for persisting the log messages into an external `.txt` file.
@@ -176,6 +181,8 @@ Device: Stream's Mac
 2022-11-30 13:04:08'577 D/              ChatViewModel initialized
 2022-11-30 13:13:04'640 D/              ChatController initialized
 ```
+
+<img align="right" width="140px" src="https://user-images.githubusercontent.com/24237865/205479526-5fa0b5f0-22df-4f02-ac0e-7a7a3e050cdb.png"/>
 
 ## Stream Log Android
 
@@ -236,6 +243,8 @@ val logger by taggedLogger(tag = "Tag")
 ```
 
 >**Note**: If you don't specify the `tag` parameter, the tag value will be a class name that is logging currently. In Jetpack Compose, the tag will be the scope's name of Composable functions.
+
+<img align="right" width="140px" src="https://user-images.githubusercontent.com/24237865/205479526-5fa0b5f0-22df-4f02-ac0e-7a7a3e050cdb.png"/>
 
 ## Stream Log Android File
 
