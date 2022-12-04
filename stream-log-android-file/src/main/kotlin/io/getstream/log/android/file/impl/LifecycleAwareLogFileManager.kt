@@ -40,7 +40,7 @@ internal class LifecycleAwareLogFileManager(
     override fun clear() {
         fileLogger.clear()
         val activity = foregroundActivity ?: return
-        Toast.makeText(activity, "Logs cleared", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Logs are cleared!", Toast.LENGTH_SHORT).show()
     }
 
     override fun share() {

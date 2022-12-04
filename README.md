@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
- <a href="https://github.com/GetStream/stream-log/actions/workflows/build.yml"><img alt="Build Status" src="https://github.com/GetStream/whatsapp-clone-compose/actions/workflows/build.yml/badge.svg"/></a>
+ <a href="https://github.com/GetStream/stream-log/actions/workflows/build.yml"><img alt="Build Status" src="https://github.com/GetStream/stream-log/actions/workflows/build.yml/badge.svg"/></a>
   <a href="https://getstream.io?utm_source=Github&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Github_Dec2022_StreamLog&utm_term=DevRelOss"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/HayesGordon/e7f3c4587859c17f3e593fd3ff5b13f4/raw/11d9d9385c9f34374ede25f6471dc743b977a914/badge.json" alt="Stream Feeds"></a>
 </p><br>
 
@@ -23,7 +23,7 @@ Add the dependency below into your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.getstream:stream-log:$versions")
+    implementation("io.getstream:stream-log:$version")
 }
 ```
 
@@ -125,7 +125,7 @@ StreamLog.setValidator { priority, tag ->
 
 ## Stream Log File
 
-**Stream Log File** is an extended library for persisting the log messages into an external file.
+**Stream Log File** is an extension library for persisting the log messages into an external `.txt` file.
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-file.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
 
@@ -133,7 +133,8 @@ Add the dependency below into your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.getstream:stream-log-file:$versions")
+    implementation("io.getstream:stream-log:$version")
+    debugImplementation("io.getstream:stream-log-file:$version")
 }
 ```
 
@@ -143,11 +144,11 @@ You can persist the log messages that are triggered on runtime with `FileStreamL
 
 ```kotlin
 val fileLoggerConfig = FileStreamLogger.Config(
-    filesDir = context.filesDir, // an internal file directory
-    externalFilesDir = context.getExternalFilesDir(null), // an external file directory. This is an optional.
+    filesDir = fileDirectory, // an internal file directory
+    externalFilesDir = null, // an external file directory. This is an optional.
     app = FileStreamLogger.Config.App( // application information.
-        versionCode = context.getVersionCode(),
-        versionName = context.getVersionName()
+        versionCode = 1,
+        versionName = "1.0.0"
     ),
     device = FileStreamLogger.Config.Device( // device information
         model = "%s %s".format(Build.MANUFACTURER, Build.DEVICE),
@@ -161,10 +162,19 @@ val compositeLogger = CompositeStreamLogger(kotlinLogger, fileLogger)
 StreamLog.install(compositeLogger)
 ```
 
-Then you will get the result file below:
+Then you will get the result `.txt` file below:
 
 ```
-
+======================================================================
+Logs date time: 2022-12-02 21:08:35'288
+Version code: 1
+Version name: 1.0.0
+API level: 10
+Device: Stream's Mac
+======================================================================
+2022-11-30 13:02:29'918 D/              This is a log message
+2022-11-30 13:04:08'577 D/              ChatViewModel initialized
+2022-11-30 13:13:04'640 D/              ChatController initialized
 ```
 
 ## Stream Log Android
@@ -177,13 +187,13 @@ Add the dependency below into your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.getstream:stream-log-android:$versions")
+    implementation("io.getstream:stream-log-android:$version")
 }
 ```
 
 ### AndroidStreamLogger
 
-You can simply install a logger for Android with `AndroidStreamLogger` like the below:
+First, you need to install a logger for Android with `AndroidStreamLogger` like the below:
 
 ```kotlin
 class App : Application() {
@@ -229,7 +239,7 @@ val logger by taggedLogger(tag = "Tag")
 
 ## Stream Log Android File
 
-Stream Log Android 
+**Stream Log Android File** is an extension library for persisting your log messages into external `.txt` files. So you can record the runtime log messages into a `.txt` file, and it will help you to trace the log messages in many complex scenarios.
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
 
@@ -237,8 +247,69 @@ Add the dependency below into your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.getstream:stream-log-android-init:$versions")
+    implementation("io.getstream:stream-log-android:$version")
+    debugImplementation("io.getstream:stream-log-android-file:$version")
 }
+```
+
+### AndroidStreamLogger
+
+First, you need to install a logger for Android with `AndroidStreamLogger` like the below:
+
+```kotlin
+class App : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        AndroidStreamLogger.installOnDebuggableApp(this)
+    }
+}
+```
+
+>**Note**: We'd recommend you install the logger only once in your application class.
+
+Now, you can print log messages simply like the below:
+
+```kotlin
+streamLog { "This is a log messages" }
+streamLog(priority = Priority.INFO, tag = "Tag") { "This is a log messages" }
+StreamLog.d(tag = "Tag") { "This is a log message" }
+```
+
+### Record Runtime Log Messages Into an External File
+
+You don't need to do additional setup for this, because the `stream-log-android-file` dependency will execute all processes automatically. So let's extract the log messages into an external file following the command lines below on your terminal:
+
+1. Build and run your project on your emulator or connect to your real device over Wi-Fi following the [Connect to a device over Wi-Fi](https://developer.android.com/studio/command-line/adb#connect-to-a-device-over-wi-fi) guidelines.
+2. Enter in terminal: `adb shell am start-foreground-service -a io.getstream.log.android.CLEAR`
+3. You should see the toast message `Logs are cleared!`.
+4. Explore your app to record specific log messages.
+5. Enter in terminal: `adb shell am start-foreground-service -a io.getstream.log.android.SHARE`
+6. You should see a file-sharing dialog chooser in your device.
+7. Share the log file via other applications, such as Google Cloud.
+8. Exit recording log messages by enter in terminal: `adb shell am stopservice -a io.getstream.log.android.SHARE`
+
+Then you will get the result `.txt` file below:
+
+```
+======================================================================
+Logs date time: 2022-12-02 21:08:35'288
+Version code: 1
+Version name: 1.0.1
+Android API level: 31
+Device: samsung beyond1
+======================================================================
+2022-11-30 13:02:29'918 D/              main:2 [Main]: onCreate MainActivity
+2022-11-30 13:13:06'656 D/              main:2 [Main]: Button clicked
+2022-11-30 13:13:07'225 D/              main:2 [Main]: Button clicked
+2022-11-30 13:13:07'439 D/              main:2 [Main]: Button clicked
+2022-11-30 13:14:23'316 D/              main:2 [Main]: onCreate MainActivity
+2022-11-30 13:14:24'296 D/              main:2 [Main]: Button clicked
+2022-11-30 13:14:24'723 D/              main:2 [Main]: Button clicked
+2022-11-30 16:36:39'102 D/              main:2 [MainActivity]: onCreate MainActivity
+2022-11-30 16:42:48'987 D/              main:2 [BoxScopeInstance]: Button Clicked!
+2022-11-30 16:42:49'873 D/              main:2 [BoxScopeInstance]: Button Clicked!
 ```
 
 ## Stream Log BOM
@@ -249,7 +320,7 @@ The **Stream Log** Bill of Materials (BOM) lets you manage all of your **Stream 
 
 ```gradle
 dependencies {
-    implementation("io.getstream:stream-log-bom:$versions")
+    implementation("io.getstream:stream-log-bom:$version")
 
     implementation("io.getstream:stream-log")
     implementation("io.getstream:stream-log-file")
