@@ -8,7 +8,7 @@
 </p><br>
 
 <p align="center">
-📠 Stream Log is a lightweight and extensible logger library for Kotlin and Android.
+🛥 Stream Log is a lightweight and extensible logger library for Kotlin and Android.
 </p>
 
 <img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
