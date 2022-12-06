@@ -34,9 +34,9 @@ android {
 dependencies {
     // stream-log
     implementation(project(":stream-log"))
-    implementation(project(":stream-log-file"))
     implementation(project(":stream-log-android"))
-    implementation(project(":stream-log-android-file"))
+    debugImplementation(project(":stream-log-file"))
+    debugImplementation(project(":stream-log-android-file"))
 
     // compose
     implementation(Dependencies.composeUi)
