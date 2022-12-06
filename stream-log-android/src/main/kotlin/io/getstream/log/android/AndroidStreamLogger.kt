@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
  *
- * Licensed under the Stream License;
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    https://github.com/GetStream/stream-log/blob/main/LICENSE
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,25 +16,32 @@
 
 package io.getstream.log.android
 
+import android.app.Application
+import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
 import io.getstream.log.Priority
+import io.getstream.log.StreamLog
 import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
 
-private const val MAX_TAG_LEN = 23
-
 /**
- * The [StreamLogger] implementation for android projects.
+ * The [StreamLogger] implementation for Android.
+ *
+ * This logger traces the current thread on Android and following the Android log priorities.
+ *
+ * @property maxTagLength The maximum length size of the tag.
  */
-public class AndroidStreamLogger : StreamLogger {
+public class AndroidStreamLogger constructor(
+    private val maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+) : StreamLogger {
 
     override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
 
         val androidPriority = priority.toAndroidPriority()
-        val androidTag = tag.takeIf { it.length > MAX_TAG_LEN && !isNougatOrHigher() }
-            ?.substring(0, MAX_TAG_LEN)
+        val androidTag = tag.takeIf { it.length > maxTagLength && !isNougatOrHigher() }
+            ?.substring(0, maxTagLength)
             ?: tag
 
         val thread = Thread.currentThread().run { "$name:$id" }
@@ -60,4 +67,36 @@ public class AndroidStreamLogger : StreamLogger {
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
     private fun isNougatOrHigher() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+
+    public companion object {
+        private val Application.isDebuggableApp: Boolean
+            get() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+
+        /**
+         * Install a new [AndroidStreamLogger] if the application is debuggable.
+         *
+         * @param application Application.
+         * @param maxTagLength The maximum length size of the tag.
+         */
+        public fun installOnDebuggableApp(application: Application, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+            if (!StreamLog.isInstalled && application.isDebuggableApp) {
+                StreamLog.install(
+                    AndroidStreamLogger(maxTagLength = maxTagLength)
+                )
+            }
+        }
+
+        /**
+         * Install a new [AndroidStreamLogger].
+         *
+         * @param maxTagLength The maximum length size of the tag.
+         */
+        public fun install(maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+            StreamLog.install(
+                AndroidStreamLogger(maxTagLength = maxTagLength)
+            )
+        }
+
+        internal const val DEFAULT_MAX_TAG_LENGTH = 23
+    }
 }

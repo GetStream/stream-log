@@ -7,7 +7,7 @@ apply plugin: 'de.mannodermaus.android-junit5'
 
 ext {
     PUBLISH_GROUP_ID = Configuration.artifactGroup
-    PUBLISH_ARTIFACT_ID = 'stream-log-android-init'
+    PUBLISH_ARTIFACT_ID = 'stream-log-android-file'
     PUBLISH_VERSION = rootVersionName
 }
 
@@ -27,9 +27,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 dependencies {
-    implementation project(":stream-log")
+    api project(":stream-log-android")
     implementation project(":stream-log-file")
-    implementation project(":stream-log-android")
 
     implementation Dependencies.androidxCoreKtx
 

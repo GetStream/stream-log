@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
  *
- * Licensed under the Stream License;
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    https://github.com/GetStream/stream-log/blob/main/LICENSE
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -136,7 +136,7 @@ public class FileStreamLogger(
             |Logs date time: ${timeFormat.format(Date())}
             |Version code: ${app.versionCode}
             |Version name: ${app.versionName}
-            |Android API level: ${device.androidApiLevel}
+            |API level: ${device.androidApiLevel}
             |Device: ${device.model}
             |======================================================================
             |

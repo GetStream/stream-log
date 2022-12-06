@@ -14,3 +14,16 @@
  * limitations under the License.
  */
 
+package io.getstream.log.sample
+
+import android.app.Application
+import io.getstream.log.android.AndroidStreamLogger
+
+class App : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        AndroidStreamLogger.installOnDebuggableApp(this)
+    }
+}

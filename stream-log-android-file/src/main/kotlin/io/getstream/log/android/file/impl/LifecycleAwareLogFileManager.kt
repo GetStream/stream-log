@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
  *
- * Licensed under the Stream License;
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    https://github.com/GetStream/stream-log/blob/main/LICENSE
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.getstream.log.android.init.impl
+package io.getstream.log.android.file.impl
 
 import android.app.Activity
 import android.content.Intent
@@ -22,8 +22,8 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import io.getstream.log.android.init.StreamLogFileManager.ClearManager
-import io.getstream.log.android.init.StreamLogFileManager.ShareManager
+import io.getstream.log.android.file.StreamLogFileManager.ClearManager
+import io.getstream.log.android.file.StreamLogFileManager.ShareManager
 import io.getstream.log.file.FileStreamLogger
 import java.io.File
 
@@ -40,7 +40,7 @@ internal class LifecycleAwareLogFileManager(
     override fun clear() {
         fileLogger.clear()
         val activity = foregroundActivity ?: return
-        Toast.makeText(activity, "Logs cleared", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Logs are cleared!", Toast.LENGTH_SHORT).show()
     }
 
     override fun share() {
