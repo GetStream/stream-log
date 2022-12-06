@@ -41,6 +41,11 @@ dependencies {
 ```kotlin
 // install `KotlinStreamLogger`. You only need to do this once.
 StreamLog.install(KotlinStreamLogger())
+
+// change the log validator as your taste. 
+StreamLog.setValidator { priority, _ ->
+  priority.level >= Priority.DEBUG.level
+}
 ```
 
 Now, you can print log messages simply like the below:
@@ -212,6 +217,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+         // change the log validator as your taste.
+        StreamLog.setValidator { priority, _ -> priority.level >= Priority.DEBUG.level }
+
+        // install AndroidStreamLogger.
         AndroidStreamLogger.installOnDebuggableApp(this)
     }
 }
