@@ -80,6 +80,9 @@ public class AndroidStreamLogger constructor(
          */
         public fun installOnDebuggableApp(application: Application, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
             if (!StreamLog.isInstalled && application.isDebuggableApp) {
+                StreamLog.setValidator { priority, _ ->
+                    priority.level >= Priority.DEBUG.level
+                }
                 StreamLog.install(
                     AndroidStreamLogger(maxTagLength = maxTagLength)
                 )
@@ -92,6 +95,9 @@ public class AndroidStreamLogger constructor(
          * @param maxTagLength The maximum length size of the tag.
          */
         public fun install(maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+            StreamLog.setValidator { priority, _ ->
+                priority.level >= Priority.DEBUG.level
+            }
             StreamLog.install(
                 AndroidStreamLogger(maxTagLength = maxTagLength)
             )
