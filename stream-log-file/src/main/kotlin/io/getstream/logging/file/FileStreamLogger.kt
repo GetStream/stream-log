@@ -136,7 +136,7 @@ public class FileStreamLogger(
             |Logs date time: ${timeFormat.format(Date())}
             |Version code: ${app.versionCode}
             |Version name: ${app.versionName}
-            |Android API level: ${device.androidApiLevel}
+            |API level: ${device.androidApiLevel}
             |Device: ${device.model}
             |======================================================================
             |
