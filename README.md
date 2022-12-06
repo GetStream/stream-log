@@ -1,6 +1,10 @@
 <h1 align="center">Stream Log</h1></br>
 
 <p align="center">
+🛥 Stream Log is a lightweight and extensible logger library for Kotlin and Android.
+</p><br>
+
+<p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
  <a href="https://github.com/GetStream/stream-log/actions/workflows/build.yml"><img alt="Build Status" src="https://github.com/GetStream/stream-log/actions/workflows/build.yml/badge.svg"/></a>
@@ -8,7 +12,7 @@
 </p><br>
 
 <p align="center">
-🛥 Stream Log is a lightweight and extensible logger library for Kotlin and Android.
+  <a href="https://getstream.io/chat/sdk/android/"><img width="210px" alt="Logo" src="https://user-images.githubusercontent.com/24237865/205788244-57f7200c-7ed6-456a-927e-2594e3b311bf.png"/></a> <br>
 </p>
 
 ## Why Stream Log?
