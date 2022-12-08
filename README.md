@@ -24,7 +24,7 @@
 
 **Stream Log** is a lightweight logger and a pure Kotlin module to utilize this library on your Kotlin projects.
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log%22)
 
 Add the dependency below into your **module**'s `build.gradle` file:
 
@@ -141,7 +141,7 @@ StreamLog.setValidator { priority, tag ->
 
 **Stream Log File** is an extension library for persisting the log messages into an external `.txt` file.
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-file.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-file.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log-file%22)
 
 Add the dependency below into your **module**'s `build.gradle` file:
 
@@ -197,7 +197,7 @@ Device: Stream's Mac
 
 **Stream Log Android** is a simple Android logger on top of the **Stream Log**.
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log-android%22)
 
 Add the dependency below into your **module**'s `build.gradle` file:
 
@@ -263,7 +263,7 @@ val logger by taggedLogger(tag = "Tag")
 
 **Stream Log Android File** is an extension library for persisting your log messages into external `.txt` files. So you can record the runtime log messages into a `.txt` file, and it will help you to trace the log messages in many complex scenarios.
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log-android-file%22)
 
 Add the dependency below into your **module**'s `build.gradle` file:
 
