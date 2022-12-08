@@ -220,7 +220,7 @@ class App : Application() {
         // install AndroidStreamLogger.
         AndroidStreamLogger.installOnDebuggableApp(this)
         
-         // change the log validator as your taste.
+        // change the log validator as your taste.
         StreamLog.setValidator { priority, _ -> priority.level >= Priority.VERBOSE.level }
     }
 }
