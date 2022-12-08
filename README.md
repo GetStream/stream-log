@@ -217,11 +217,11 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-         // change the log validator as your taste.
-        StreamLog.setValidator { priority, _ -> priority.level >= Priority.DEBUG.level }
-
         // install AndroidStreamLogger.
         AndroidStreamLogger.installOnDebuggableApp(this)
+        
+         // change the log validator as your taste.
+        StreamLog.setValidator { priority, _ -> priority.level >= Priority.VERBOSE.level }
     }
 }
 ```
