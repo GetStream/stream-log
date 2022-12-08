@@ -16,7 +16,7 @@
 </p>
 
 ## Why Stream Log?
-**Stream Log** originated from [stream-chat-android](https://github.com/getStream/stream-chat-android), and it has already been verified as used by billions of global end-users across thousands of different apps. It's simple and easy to use. You can also record and extract the runtime log messages into an external `.txt` file and utilize it to trace your log messages.
+**Stream Log** originated from [stream-chat-android](https://github.com/getStream/stream-chat-android), and it has already been verified by delivering to billions of global end-users across thousands of different apps. It's simple and easy to use. You can also record and extract the runtime log messages into an external `.txt` file and utilize it to trace your log messages.
 
 <img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
 
