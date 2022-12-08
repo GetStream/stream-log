@@ -14,18 +14,9 @@ ext {
 
 apply from: "${rootDir}/scripts/publish-module.gradle"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
-        freeCompilerArgs += [
-                '-progressive',
-                '-Xexplicit-api=strict',
-                '-opt-in=kotlin.RequiresOptIn',
-        ]
+        freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn',]
     }
 }
 

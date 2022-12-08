@@ -36,6 +36,16 @@ subprojects {
     }
     if (it.name != 'app') {
         apply plugin: "io.gitlab.arturbosch.detekt"
+
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+            kotlinOptions.jvmTarget = 1.8
+            kotlinOptions {
+                freeCompilerArgs += [
+                        '-progressive',
+                        '-Xexplicit-api=strict',
+                ]
+            }
+        }
     }
 }
 
