@@ -76,31 +76,29 @@ public class AndroidStreamLogger constructor(
          * Install a new [AndroidStreamLogger] if the application is debuggable.
          *
          * @param application Application.
+         * @param minPriority The minimum [Priority] to show up log messages.
          * @param maxTagLength The maximum length size of the tag.
          */
-        public fun installOnDebuggableApp(application: Application, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+        public fun installOnDebuggableApp(
+            application: Application,
+            minPriority: Priority = Priority.DEBUG,
+            maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+        ) {
             if (!StreamLog.isInstalled && application.isDebuggableApp) {
-                StreamLog.setValidator { priority, _ ->
-                    priority.level >= Priority.DEBUG.level
-                }
-                StreamLog.install(
-                    AndroidStreamLogger(maxTagLength = maxTagLength)
-                )
+                StreamLog.setValidator { priority, _ -> priority.level >= minPriority.level }
+                StreamLog.install(AndroidStreamLogger(maxTagLength = maxTagLength))
             }
         }
 
         /**
          * Install a new [AndroidStreamLogger].
          *
+         * @param minPriority The minimum [Priority] to show up log messages.
          * @param maxTagLength The maximum length size of the tag.
          */
-        public fun install(maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
-            StreamLog.setValidator { priority, _ ->
-                priority.level >= Priority.DEBUG.level
-            }
-            StreamLog.install(
-                AndroidStreamLogger(maxTagLength = maxTagLength)
-            )
+        public fun install(minPriority: Priority = Priority.DEBUG, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+            StreamLog.setValidator { priority, _ -> priority.level >= minPriority.level }
+            StreamLog.install(AndroidStreamLogger(maxTagLength = maxTagLength))
         }
 
         internal const val DEFAULT_MAX_TAG_LENGTH = 23
