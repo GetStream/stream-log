@@ -17,15 +17,6 @@ apply from: "${rootDir}/scripts/android.gradle"
 android {
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        freeCompilerArgs += [
-                '-progressive',
-                '-Xexplicit-api=strict',
-        ]
-    }
-}
-
 dependencies {
     api project(":stream-log-android")
     implementation project(":stream-log-file")
