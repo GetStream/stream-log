@@ -12,7 +12,7 @@ object Versions {
     internal const val ANDROIDX_TEST_JUNIT = "1.1.4"
     internal const val ANDROIDX_KTX = "1.9.0"
     internal const val DETEKT_PLUGIN = "1.21.0"
-    internal const val DOKKA = "1.7.20"
+    internal const val DOKKA = "1.8.0"
     internal const val DOKKASAURUS = "0.1.10"
     internal const val GRADLE_NEXUS_PUBLISH_PLUGIN = "1.1.0"
     internal const val GRADLE_VERSIONS_PLUGIN = "0.44.0"
