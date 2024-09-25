@@ -21,9 +21,9 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.FileProvider
+import io.getstream.log.AndroidStreamLogger
 import io.getstream.log.CompositeStreamLogger
 import io.getstream.log.StreamLog
-import io.getstream.log.android.AndroidStreamLogger
 import io.getstream.log.android.file.impl.LifecycleAwareLogFileManager
 import io.getstream.log.file.FileStreamLogger
 

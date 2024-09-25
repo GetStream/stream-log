@@ -18,6 +18,7 @@ package io.getstream.log.file
 import io.getstream.log.Priority
 import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
+import io.getstream.log.platformThread
 import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.File
@@ -63,7 +64,7 @@ public class FileStreamLogger(
     message: String,
     throwable: Throwable?,
   ) {
-    val thread = Thread.currentThread()
+    val thread = platformThread
     executor.execute {
       initIfNeeded()
       swapFiles()
