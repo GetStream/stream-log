@@ -20,22 +20,42 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import platform.Foundation.NSLog
+import platform.Foundation.NSThread
 
-public class AppleStreamLogger : KotlinStreamLogger(), StreamLogger {
+public class AppleStreamLogger(
+  private val maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+) : KotlinStreamLogger(), StreamLogger {
 
   public override val now: () -> LocalDateTime =
     { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
 
   override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
-    val now = now.invoke()
-    val thread = platformThread.run { "$name:$id" }
-    val composed = "$now ($thread) [${priority.stringify()}/$tag]: $message"
+    val appleTag = tag.takeIf { it.length > maxTagLength }
+      ?.substring(0, maxTagLength)
+      ?: tag
+
+    val thread = NSThread.currentThread().run { "$name:$threadPriority" }
+    val composed = "($thread) $message"
     val finalMessage = throwable?.let {
       "$composed\n${it.stringify()}"
     } ?: composed
-    when (priority) {
-      Priority.ERROR, Priority.ASSERT -> printlnError(finalMessage)
-      else -> println(finalMessage)
+
+    NSLog("[$priority] ($appleTag) $finalMessage")
+  }
+
+  public companion object {
+    /**
+     * Install a new [AppleStreamLogger].
+     *
+     * @param minPriority The minimum [Priority] to show up log messages.
+     * @param maxTagLength The maximum length size of the tag.
+     */
+    public fun install(minPriority: Priority = Priority.DEBUG, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+      StreamLog.setValidator { priority, _ -> priority.level >= minPriority.level }
+      StreamLog.install(AppleStreamLogger(maxTagLength = maxTagLength))
     }
+
+    internal const val DEFAULT_MAX_TAG_LENGTH = 23
   }
 }

@@ -19,10 +19,9 @@ package io.getstream.log
 
 import platform.Foundation.NSThread
 import kotlin.experimental.ExperimentalNativeApi
-import kotlin.native.identityHashCode
 
 internal actual val platformThread: PlatformThread = PlatformThread(
   thread = NSThread.currentThread(),
-  id = NSThread.currentThread().identityHashCode().toString(),
+  id = NSThread.currentThread().threadPriority.toString(),
   name = NSThread.currentThread().name.orEmpty(),
 )
