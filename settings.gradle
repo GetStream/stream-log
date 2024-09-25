@@ -6,7 +6,6 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
@@ -16,4 +15,3 @@ rootProject.name = "Log"
 include ':app'
 include ':stream-log'
 include ':stream-log-file'
-include ':stream-log-android-file'

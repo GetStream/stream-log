@@ -15,7 +15,7 @@
  */
 package io.getstream.log
 
-internal actual val platformThread: PlatformThread = PlatformThread(
+public actual val platformThread: PlatformThread = PlatformThread(
   thread = Thread.currentThread(),
   id = Thread.currentThread().id.toString(),
   name = Thread.currentThread().name,

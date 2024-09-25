@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:OptIn(ExperimentalNativeApi::class)
-
 package io.getstream.log
 
 import platform.Foundation.NSThread
-import kotlin.experimental.ExperimentalNativeApi
 
-internal actual val platformThread: PlatformThread = PlatformThread(
+public actual val platformThread: PlatformThread = PlatformThread(
   thread = NSThread.currentThread(),
   id = NSThread.currentThread().threadPriority.toString(),
   name = NSThread.currentThread().name.orEmpty(),

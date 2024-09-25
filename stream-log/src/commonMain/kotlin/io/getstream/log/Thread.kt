@@ -21,4 +21,4 @@ public data class PlatformThread(
   val name: String,
 )
 
-internal expect val platformThread: PlatformThread
+public expect val platformThread: PlatformThread

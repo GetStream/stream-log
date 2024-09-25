@@ -103,6 +103,10 @@ public final class io/getstream/log/TaggedLogger {
 	public final fun w (Lkotlin/jvm/functions/Function0;)V
 }
 
+public final class io/getstream/log/ThreadKt {
+	public static final fun getPlatformThread ()Lio/getstream/log/PlatformThread;
+}
+
 public final class io/getstream/log/helper/StringifyKt {
 	public static final fun stringify (Lio/getstream/log/PlatformThread;)Ljava/lang/String;
 	public static final fun stringify (Lio/getstream/log/Priority;)Ljava/lang/String;
