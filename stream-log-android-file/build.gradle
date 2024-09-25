@@ -1,36 +1,36 @@
-import io.getstream.log.Dependencies
-import io.getstream.log.Configuration
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'de.mannodermaus.android-junit5'
-
-ext {
-    PUBLISH_GROUP_ID = Configuration.artifactGroup
-    PUBLISH_ARTIFACT_ID = 'stream-log-android-file'
-    PUBLISH_VERSION = rootVersionName
-}
-
-apply from: "${rootDir}/scripts/publish-module.gradle"
-apply from: "${rootDir}/scripts/android.gradle"
-
-android {
-}
-
-dependencies {
-    api project(":stream-log-android")
-    implementation project(":stream-log-file")
-
-    implementation Dependencies.androidxCoreKtx
-
-    testImplementation Dependencies.junitJupiterApi
-    testImplementation Dependencies.junitJupiterParams
-    testRuntimeOnly Dependencies.junitJupiterEngine
-    testRuntimeOnly Dependencies.junitVintageEngine
-
-    testImplementation Dependencies.testParameterInjector
-    testImplementation Dependencies.mockito
-    testImplementation Dependencies.mockitoKotlin
-
-    detektPlugins(Dependencies.detektFormatting)
-}
+//import io.getstream.log.Dependencies
+//import io.getstream.log.Configuration
+//
+//apply plugin: 'com.android.library'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'de.mannodermaus.android-junit5'
+//
+////ext {
+////    PUBLISH_GROUP_ID = Configuration.artifactGroup
+////    PUBLISH_ARTIFACT_ID = 'stream-log-android-file'
+////    PUBLISH_VERSION = rootVersionName
+////}
+//
+//apply from: "${rootDir}/scripts/publish-module.gradle"
+//apply from: "${rootDir}/scripts/android.gradle"
+//
+//android {
+//}
+//
+//dependencies {
+//    api project(":stream-log-android")
+//    implementation project(":stream-log-file")
+//
+//    implementation Dependencies.androidxCoreKtx
+//
+//    testImplementation Dependencies.junitJupiterApi
+//    testImplementation Dependencies.junitJupiterParams
+//    testRuntimeOnly Dependencies.junitJupiterEngine
+//    testRuntimeOnly Dependencies.junitVintageEngine
+//
+//    testImplementation Dependencies.testParameterInjector
+//    testImplementation Dependencies.mockito
+//    testImplementation Dependencies.mockitoKotlin
+//
+//    detektPlugins(Dependencies.detektFormatting)
+//}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.sample
 
 import android.os.Bundle
@@ -25,11 +24,11 @@ import io.getstream.log.streamLog
 
 class MainActivity : ComponentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        streamLog { "onCreate MainActivity" }
+    streamLog { "onCreate MainActivity" }
 
-        setContent { SampleTheme { Main() } }
-    }
+    setContent { SampleTheme { Main() } }
+  }
 }

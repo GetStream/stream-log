@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.sample
 
 import org.junit.Assert.assertEquals
@@ -25,8 +24,8 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+  @Test
+  fun addition_isCorrect() {
+    assertEquals(4, 2 + 2)
+  }
 }

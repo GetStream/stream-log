@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.android.file
 
 import android.app.NotificationChannel
@@ -41,42 +40,42 @@ private const val NOTIFICATION_ID = 1004
  */
 public class StreamLogFileService : Service() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate() {
-        super.onCreate()
+  @RequiresApi(Build.VERSION_CODES.O)
+  override fun onCreate() {
+    super.onCreate()
 
-        val channelId = "io.getstream.log.android.file"
-        val channelName = "Stream Log File Service"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId, channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(channel)
-        }
-
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.stream_logo)
-            .setContentTitle("Stream Log File Service")
-            .setContentText("Starting Stream Log File Service...")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_CALL)
-
-        val notification = notificationBuilder.build()
-
-        startForeground(NOTIFICATION_ID, notification)
+    val channelId = "io.getstream.log.android.file"
+    val channelName = "Stream Log File Service"
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      val channel = NotificationChannel(
+        channelId, channelName,
+        NotificationManager.IMPORTANCE_DEFAULT
+      )
+      val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+      manager.createNotificationChannel(channel)
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+    val notificationBuilder = NotificationCompat.Builder(this, channelId)
+      .setSmallIcon(R.drawable.stream_logo)
+      .setContentTitle("Stream Log File Service")
+      .setContentText("Starting Stream Log File Service...")
+      .setPriority(NotificationCompat.PRIORITY_HIGH)
+      .setCategory(NotificationCompat.CATEGORY_CALL)
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when (intent?.action) {
-            ACTION_SHARE -> StreamLogFileManager.share()
-            ACTION_CLEAR -> StreamLogFileManager.clear()
-        }
-        return super.onStartCommand(intent, flags, startId)
+    val notification = notificationBuilder.build()
+
+    startForeground(NOTIFICATION_ID, notification)
+  }
+
+  override fun onBind(intent: Intent): IBinder? {
+    return null
+  }
+
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    when (intent?.action) {
+      ACTION_SHARE -> StreamLogFileManager.share()
+      ACTION_CLEAR -> StreamLogFileManager.clear()
     }
+    return super.onStartCommand(intent, flags, startId)
+  }
 }

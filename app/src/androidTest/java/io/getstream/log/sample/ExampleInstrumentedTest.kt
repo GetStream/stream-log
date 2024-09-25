@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.sample
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -29,10 +28,10 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("io.getstream.log", appContext.packageName)
-    }
+  @Test
+  fun useAppContext() {
+    // Context of the app under test.
+    val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+    assertEquals("io.getstream.log", appContext.packageName)
+  }
 }

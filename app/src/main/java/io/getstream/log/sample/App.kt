@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.sample
 
 import android.app.Application
-import io.getstream.log.android.AndroidStreamLogger
+import io.getstream.log.StreamLog
+import io.getstream.log.kotlin.KotlinStreamLogger
 
 class App : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
+  override fun onCreate() {
+    super.onCreate()
 
-        AndroidStreamLogger.installOnDebuggableApp(this)
-    }
+    StreamLog.install(KotlinStreamLogger())
+    // AndroidStreamLogger.installOnDebuggableApp(this)
+  }
 }
