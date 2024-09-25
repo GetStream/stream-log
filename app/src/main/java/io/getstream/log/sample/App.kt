@@ -16,15 +16,13 @@
 package io.getstream.log.sample
 
 import android.app.Application
-import io.getstream.log.StreamLog
-import io.getstream.log.kotlin.KotlinStreamLogger
+import io.getstream.log.AndroidStreamLogger
 
 class App : Application() {
 
   override fun onCreate() {
     super.onCreate()
 
-    StreamLog.install(KotlinStreamLogger())
-    // AndroidStreamLogger.installOnDebuggableApp(this)
+    AndroidStreamLogger.installOnDebuggableApp(this)
   }
 }

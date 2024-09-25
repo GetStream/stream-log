@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright (c) 2014-2024 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.getstream.log.android
+package io.getstream.log
 
 import android.app.Application
 import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
-import io.getstream.log.Priority
-import io.getstream.log.StreamLog
-import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
-/**
- * The [StreamLogger] implementation for Android.
- *
- * This logger traces the current thread on Android and following the Android log priorities.
- *
- * @property maxTagLength The maximum length size of the tag.
- */
-public class AndroidStreamLogger constructor(
+public class AndroidStreamLogger(
   private val maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
-) : StreamLogger {
+) : KotlinStreamLogger(), StreamLogger {
+
+  public override val now: () -> LocalDateTime =
+    { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
 
   override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
 

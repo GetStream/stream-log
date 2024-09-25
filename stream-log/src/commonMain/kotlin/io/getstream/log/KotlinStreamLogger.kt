@@ -15,25 +15,10 @@
  */
 package io.getstream.log
 
-import io.getstream.log.Priority.ASSERT
-import io.getstream.log.Priority.ERROR
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
-/**
- * An [StreamLogger] implementation only log Error logs.
- */
-internal object ErrorStreamLogger : KotlinStreamLogger() {
+public abstract class KotlinStreamLogger : StreamLogger {
+  public abstract val now: () -> LocalDateTime
 
-  override val now: () -> LocalDateTime
-    get() = { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
-
-  override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
-    when (priority) {
-      ERROR, ASSERT -> { /* NO-OP */ }
-      else -> { /* NO-OP */ }
-    }
-  }
+  abstract override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?)
 }

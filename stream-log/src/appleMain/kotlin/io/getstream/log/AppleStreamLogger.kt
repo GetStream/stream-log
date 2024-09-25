@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright (c) 2014-2024 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,27 @@
  */
 package io.getstream.log
 
-import io.getstream.log.Priority.ASSERT
-import io.getstream.log.Priority.ERROR
+import io.getstream.log.helper.stringify
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-/**
- * An [StreamLogger] implementation only log Error logs.
- */
-internal object ErrorStreamLogger : KotlinStreamLogger() {
+public class AppleStreamLogger : KotlinStreamLogger(), StreamLogger {
 
-  override val now: () -> LocalDateTime
-    get() = { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
+  public override val now: () -> LocalDateTime =
+    { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
 
   override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
+    val now = now.invoke()
+    val thread = platformThread.run { "$name:$id" }
+    val composed = "$now ($thread) [${priority.stringify()}/$tag]: $message"
+    val finalMessage = throwable?.let {
+      "$composed\n${it.stringify()}"
+    } ?: composed
     when (priority) {
-      ERROR, ASSERT -> { /* NO-OP */ }
-      else -> { /* NO-OP */ }
+      Priority.ERROR, Priority.ASSERT -> printlnError(finalMessage)
+      else -> println(finalMessage)
     }
   }
 }

@@ -22,7 +22,7 @@ mavenPublishing {
 
 kotlin {
     androidTarget { publishLibraryVariants("release") }
-    jvm("desktop")
+    jvm()
 
     iosX64()
     iosArm64()
@@ -34,8 +34,10 @@ kotlin {
     @Suppress("OPT_IN_USAGE")
     applyHierarchyTemplate {
         common {
-            group("jvm") {
+            group("android") {
                 withAndroidTarget()
+            }
+            group("jvm") {
                 withJvm()
             }
             group("skia") {
@@ -59,6 +61,12 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.datetime)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.annotation)
             }
         }
     }

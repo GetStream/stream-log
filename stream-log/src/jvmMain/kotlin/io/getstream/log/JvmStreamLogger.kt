@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
+ * Copyright (c) 2014-2024 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.getstream.log.kotlin
+package io.getstream.log
 
-import io.getstream.log.Priority
-import io.getstream.log.Priority.ASSERT
-import io.getstream.log.Priority.ERROR
-import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
-import io.getstream.log.platformThread
-import io.getstream.log.printlnError
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-/**
- * The [StreamLogger] implementation for kotlin projects. Mainly used in Unit Tests.
- */
-public open class KotlinStreamLogger(
-  private val now: () -> LocalDateTime = { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) },
-) : StreamLogger {
+public class JvmStreamLogger : KotlinStreamLogger(), StreamLogger {
+
+  public override val now: () -> LocalDateTime =
+    { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
 
   override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
     val now = now.invoke()
@@ -42,7 +34,7 @@ public open class KotlinStreamLogger(
       "$composed\n${it.stringify()}"
     } ?: composed
     when (priority) {
-      ERROR, ASSERT -> printlnError(finalMessage)
+      Priority.ERROR, Priority.ASSERT -> printlnError(finalMessage)
       else -> println(finalMessage)
     }
   }
