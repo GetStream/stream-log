@@ -30,6 +30,10 @@ public abstract class io/getstream/log/KotlinStreamLogger : io/getstream/log/Str
 	public abstract fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
 }
 
+public final class io/getstream/log/PlatformLoggerKt {
+	public static final fun getPlatformStreamLogger ()Lio/getstream/log/KotlinStreamLogger;
+}
+
 public final class io/getstream/log/PlatformThread {
 	public fun <init> (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/Object;
