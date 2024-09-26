@@ -96,9 +96,13 @@ StreamLog provides differnt stream logger depending on the platform below:
 - iOS/macOS: `AppleStreamLogger`
 - Jvm: `JvmStreamLogger`
 
-If you want to use Stream Log on your Android project, you can follow the guidelines below.
+You can install those logger like the example below:
 
-First, you need to install a logger for Android with `AndroidStreamLogger` like the below:
+```kotlin
+StreamLog.install(AndroidStreamLogger()) // AppleStreamLogger() or JvmStreamLogger() depending on your platform.
+```
+
+If you want to use Stream Log on your Android project, you can follow the guidelines. First, you need to install a logger for Android with `AndroidStreamLogger` like the below:
 
 ```kotlin
 class App : Application() {
