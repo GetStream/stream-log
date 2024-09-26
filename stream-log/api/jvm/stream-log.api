@@ -9,19 +9,32 @@ public abstract interface class io/getstream/log/IsLoggableValidator {
 }
 
 public final class io/getstream/log/JvmStreamLogger : io/getstream/log/KotlinStreamLogger, io/getstream/log/StreamLogger {
+	public static final field Companion Lio/getstream/log/JvmStreamLogger$Companion;
 	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getNow ()Lkotlin/jvm/functions/Function0;
+	public fun install (Lio/getstream/log/Priority;I)V
 	public fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
 }
 
+public final class io/getstream/log/JvmStreamLogger$Companion {
+	public final fun install (Lio/getstream/log/Priority;I)V
+	public static synthetic fun install$default (Lio/getstream/log/JvmStreamLogger$Companion;Lio/getstream/log/Priority;IILjava/lang/Object;)V
+}
+
 public abstract class io/getstream/log/KotlinStreamLogger : io/getstream/log/StreamLogger {
+	public static final field Companion Lio/getstream/log/KotlinStreamLogger$Companion;
 	public fun <init> ()V
 	public abstract fun getNow ()Lkotlin/jvm/functions/Function0;
+	public abstract fun install (Lio/getstream/log/Priority;I)V
+	public static synthetic fun install$default (Lio/getstream/log/KotlinStreamLogger;Lio/getstream/log/Priority;IILjava/lang/Object;)V
 	public abstract fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
 }
 
-public final class io/getstream/log/PlatformLoggerKt {
-	public static final fun getPlatformStreamLogger ()Lio/getstream/log/KotlinStreamLogger;
+public final class io/getstream/log/KotlinStreamLogger$Companion {
+	public final fun installPlatformStreamLogger (Lio/getstream/log/Priority;I)V
+	public static synthetic fun installPlatformStreamLogger$default (Lio/getstream/log/KotlinStreamLogger$Companion;Lio/getstream/log/Priority;IILjava/lang/Object;)V
 }
 
 public final class io/getstream/log/PlatformThread {

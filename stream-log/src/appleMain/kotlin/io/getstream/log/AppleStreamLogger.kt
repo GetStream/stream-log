@@ -44,6 +44,13 @@ public class AppleStreamLogger(
     NSLog("[$priority] ($appleTag) $finalMessage")
   }
 
+  override fun install(minPriority: Priority, maxTagLength: Int) {
+    AppleStreamLogger.install(
+      minPriority = minPriority,
+      maxTagLength = maxTagLength
+    )
+  }
+
   public companion object {
     /**
      * Install a new [AppleStreamLogger].

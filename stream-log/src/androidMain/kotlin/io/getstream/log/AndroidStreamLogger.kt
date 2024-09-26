@@ -64,6 +64,13 @@ public class AndroidStreamLogger(
   @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
   private fun isNougatOrHigher() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 
+  override fun install(minPriority: Priority, maxTagLength: Int) {
+    AndroidStreamLogger.install(
+      minPriority = minPriority,
+      maxTagLength = maxTagLength
+    )
+  }
+
   public companion object {
     private val Application.isDebuggableApp: Boolean
       get() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
