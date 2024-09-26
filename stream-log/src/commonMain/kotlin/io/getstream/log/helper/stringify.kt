@@ -18,8 +18,6 @@ package io.getstream.log.helper
 import io.getstream.log.PlatformThread
 import io.getstream.log.Priority
 
-private const val INITIAL_BUFFER_SIZE = 256
-
 public fun PlatformThread.stringify(): String {
   return "$name:$id"
 }
