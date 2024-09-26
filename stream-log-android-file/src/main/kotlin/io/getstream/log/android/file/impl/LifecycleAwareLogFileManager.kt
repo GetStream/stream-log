@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.android.file.impl
 
 import android.app.Activity
@@ -31,42 +30,42 @@ import java.io.File
  * Allows you to share/clear a log file using a current foreground activity.
  */
 internal class LifecycleAwareLogFileManager(
-    private val fileLogger: FileStreamLogger,
+  private val fileLogger: FileStreamLogger,
 ) : ActivityLifecycleCallbacks(), ShareManager, ClearManager {
 
-    private val handler = Handler(Looper.getMainLooper())
-    private var foregroundActivity: Activity? = null
+  private val handler = Handler(Looper.getMainLooper())
+  private var foregroundActivity: Activity? = null
 
-    override fun clear() {
-        fileLogger.clear()
-        val activity = foregroundActivity ?: return
-        Toast.makeText(activity, "Logs are cleared!", Toast.LENGTH_SHORT).show()
-    }
+  override fun clear() {
+    fileLogger.clear()
+    val activity = foregroundActivity ?: return
+    Toast.makeText(activity, "Logs are cleared!", Toast.LENGTH_SHORT).show()
+  }
 
-    override fun share() {
-        fileLogger.share { file ->
-            handler.post {
-                val activity = foregroundActivity ?: return@post
-                activity.shareLogFile(file)
-            }
-        }
+  override fun share() {
+    fileLogger.share { file ->
+      handler.post {
+        val activity = foregroundActivity ?: return@post
+        activity.shareLogFile(file)
+      }
     }
+  }
 
-    private fun Activity.shareLogFile(file: File) = runCatching {
-        val authority = "$packageName.streamlogfileprovider"
-        val uri = FileProvider.getUriForFile(this, authority, file)
-        val share = Intent(Intent.ACTION_SEND)
-        share.putExtra(Intent.EXTRA_STREAM, uri)
-        share.type = "*/*"
-        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        startActivity(Intent.createChooser(share, "Share Logs"))
-    }
+  private fun Activity.shareLogFile(file: File) = runCatching {
+    val authority = "$packageName.streamlogfileprovider"
+    val uri = FileProvider.getUriForFile(this, authority, file)
+    val share = Intent(Intent.ACTION_SEND)
+    share.putExtra(Intent.EXTRA_STREAM, uri)
+    share.type = "*/*"
+    share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    startActivity(Intent.createChooser(share, "Share Logs"))
+  }
 
-    override fun onActivityResumed(activity: Activity) {
-        foregroundActivity = activity
-    }
+  override fun onActivityResumed(activity: Activity) {
+    foregroundActivity = activity
+  }
 
-    override fun onActivityPaused(activity: Activity) {
-        foregroundActivity = null
-    }
+  override fun onActivityPaused(activity: Activity) {
+    foregroundActivity = null
+  }
 }

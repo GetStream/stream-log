@@ -1,0 +1,115 @@
+public final class io/getstream/log/CompositeStreamLogger : io/getstream/log/StreamLogger {
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lio/getstream/log/StreamLogger;)V
+	public fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+
+public abstract interface class io/getstream/log/IsLoggableValidator {
+	public abstract fun isLoggable (Lio/getstream/log/Priority;Ljava/lang/String;)Z
+}
+
+public final class io/getstream/log/JvmStreamLogger : io/getstream/log/KotlinStreamLogger, io/getstream/log/StreamLogger {
+	public fun <init> ()V
+	public fun getNow ()Lkotlin/jvm/functions/Function0;
+	public fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+
+public abstract class io/getstream/log/KotlinStreamLogger : io/getstream/log/StreamLogger {
+	public fun <init> ()V
+	public abstract fun getNow ()Lkotlin/jvm/functions/Function0;
+	public abstract fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+
+public final class io/getstream/log/PlatformThread {
+	public fun <init> (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)Lio/getstream/log/PlatformThread;
+	public static synthetic fun copy$default (Lio/getstream/log/PlatformThread;Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/getstream/log/PlatformThread;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getThread ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/getstream/log/Priority : java/lang/Enum {
+	public static final field ASSERT Lio/getstream/log/Priority;
+	public static final field DEBUG Lio/getstream/log/Priority;
+	public static final field ERROR Lio/getstream/log/Priority;
+	public static final field INFO Lio/getstream/log/Priority;
+	public static final field VERBOSE Lio/getstream/log/Priority;
+	public static final field WARN Lio/getstream/log/Priority;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getLevel ()I
+	public static fun valueOf (Ljava/lang/String;)Lio/getstream/log/Priority;
+	public static fun values ()[Lio/getstream/log/Priority;
+}
+
+public final class io/getstream/log/SilentStreamLogger : io/getstream/log/StreamLogger {
+	public static final field INSTANCE Lio/getstream/log/SilentStreamLogger;
+	public fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+
+public final class io/getstream/log/StreamLog {
+	public static final field INSTANCE Lio/getstream/log/StreamLog;
+	public static final fun a (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun d (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun e (Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static final fun e (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public final fun getInternalLogger ()Lio/getstream/log/StreamLogger;
+	public final fun getInternalValidator ()Lio/getstream/log/IsLoggableValidator;
+	public static final fun getLogger (Ljava/lang/String;)Lio/getstream/log/TaggedLogger;
+	public static final fun i (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun install (Lio/getstream/log/StreamLogger;)V
+	public static final fun isInstalled ()Z
+	public static final fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun log$default (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public static final fun setValidator (Lio/getstream/log/IsLoggableValidator;)V
+	public static final fun unInstall ()V
+	public static final fun v (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun w (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class io/getstream/log/StreamLogExtensionKt {
+	public static final fun outerClassSimpleTagName (Ljava/lang/Object;)Ljava/lang/String;
+	public static final fun streamLog (Ljava/lang/Object;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun streamLog$default (Ljava/lang/Object;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public static final fun taggedLogger (Ljava/lang/Object;Ljava/lang/String;)Lkotlin/Lazy;
+	public static synthetic fun taggedLogger$default (Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lkotlin/Lazy;
+}
+
+public abstract interface class io/getstream/log/StreamLogger {
+	public abstract fun log (Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+
+public final class io/getstream/log/StreamLogger$DefaultImpls {
+	public static synthetic fun log$default (Lio/getstream/log/StreamLogger;Lio/getstream/log/Priority;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;ILjava/lang/Object;)V
+}
+
+public final class io/getstream/log/TaggedLogger {
+	public fun <init> (Ljava/lang/String;Lio/getstream/log/StreamLogger;Lio/getstream/log/IsLoggableValidator;)V
+	public final fun d (Lkotlin/jvm/functions/Function0;)V
+	public final fun e (Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public final fun e (Lkotlin/jvm/functions/Function0;)V
+	public final fun getDelegate ()Lio/getstream/log/StreamLogger;
+	public final fun getTag ()Ljava/lang/String;
+	public final fun getValidator ()Lio/getstream/log/IsLoggableValidator;
+	public final fun i (Lkotlin/jvm/functions/Function0;)V
+	public final fun setValidator (Lio/getstream/log/IsLoggableValidator;)V
+	public final fun v (Lkotlin/jvm/functions/Function0;)V
+	public final fun w (Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class io/getstream/log/ThreadKt {
+	public static final fun getPlatformThread ()Lio/getstream/log/PlatformThread;
+}
+
+public final class io/getstream/log/helper/StringifyKt {
+	public static final fun stringify (Lio/getstream/log/PlatformThread;)Ljava/lang/String;
+	public static final fun stringify (Lio/getstream/log/Priority;)Ljava/lang/String;
+	public static final fun stringify (Ljava/lang/Throwable;)Ljava/lang/String;
+}
+

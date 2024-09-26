@@ -1,0 +1,50 @@
+public final class io/getstream/log/sample/App : android/app/Application {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun onCreate ()V
+}
+
+public final class io/getstream/log/sample/ComposableSingletons$MainActivityKt {
+	public static final field INSTANCE Lio/getstream/log/sample/ComposableSingletons$MainActivityKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$app_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$app_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/getstream/log/sample/MainActivity : androidx/activity/ComponentActivity {
+	public static final field $stable I
+	public fun <init> ()V
+}
+
+public final class io/getstream/log/sample/theme/ColorKt {
+	public static final fun getBackground ()J
+	public static final fun getBackground800 ()J
+	public static final fun getBackground900 ()J
+	public static final fun getPurple200 ()J
+	public static final fun getPurple500 ()J
+	public static final fun getShimmerHighLight ()J
+	public static final fun getWhite87 ()J
+}
+
+public final class io/getstream/log/sample/theme/ThemeKt {
+	public static final fun SampleTheme (ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/getstream/log/sample/theme/TypeKt {
+	public static final fun getDarkTypography ()Landroidx/compose/material/Typography;
+	public static final fun getLightTypography ()Landroidx/compose/material/Typography;
+}
+
+public final class io/getstream/log/sample/ui/ComposableSingletons$MainKt {
+	public static final field INSTANCE Lio/getstream/log/sample/ui/ComposableSingletons$MainKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public fun <init> ()V
+	public final fun getLambda-1$app_release ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/getstream/log/sample/ui/MainKt {
+	public static final fun Main (Landroidx/compose/runtime/Composer;I)V
+}
+

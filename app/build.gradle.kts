@@ -1,14 +1,14 @@
 import io.getstream.log.Configuration
-import io.getstream.log.Dependencies
-import io.getstream.log.Versions
 
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
+    id(libs.plugins.android.application.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.compose.compiler.get().pluginId)
 }
 
 android {
     compileSdk = Configuration.compileSdk
+    namespace = "io.getstream.log.sample"
 
     defaultConfig {
         applicationId = "io.getstream.log.sample"
@@ -22,32 +22,28 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.ANDROIDX_COMPOSE_COMPILER
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
     // stream-log
     implementation(project(":stream-log"))
-    implementation(project(":stream-log-android"))
-    debugImplementation(project(":stream-log-file"))
-    debugImplementation(project(":stream-log-android-file"))
 
     // compose
-    implementation(Dependencies.composeUi)
-    implementation(Dependencies.composeUiTooling)
-    implementation(Dependencies.composeActivity)
-    implementation(Dependencies.composeMaterial)
-    implementation(Dependencies.composeFoundation)
-    implementation(Dependencies.composeRuntime)
-
-    implementation(Dependencies.materialComponents)
-
-    testImplementation(Dependencies.junit4)
-    androidTestImplementation(Dependencies.androidxTestJunit)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.iconsExtended)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.compose.animation)
 }

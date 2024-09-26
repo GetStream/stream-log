@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stream.IO, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2022 Stream.io Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.getstream.log.android.file
 
 import io.getstream.log.android.file.StreamLogFileManager.ClearManager
@@ -24,39 +23,39 @@ import io.getstream.log.android.file.StreamLogFileManager.ShareManager
  */
 public object StreamLogFileManager {
 
-    private var shareManager: ShareManager = ShareManager { }
-    private var clearManager: ClearManager = ClearManager { }
+  private var shareManager: ShareManager = ShareManager { }
+  private var clearManager: ClearManager = ClearManager { }
 
-    public fun init(shareManager: ShareManager, clearManager: ClearManager) {
-        StreamLogFileManager.shareManager = shareManager
-        StreamLogFileManager.clearManager = clearManager
-    }
+  public fun init(shareManager: ShareManager, clearManager: ClearManager) {
+    StreamLogFileManager.shareManager = shareManager
+    StreamLogFileManager.clearManager = clearManager
+  }
 
-    /**
-     * Shares log file.
-     */
-    public fun share() {
-        shareManager.share()
-    }
+  /**
+   * Shares log file.
+   */
+  public fun share() {
+    shareManager.share()
+  }
 
-    /**
-     * Clears log file.
-     */
-    public fun clear() {
-        clearManager.clear()
-    }
+  /**
+   * Clears log file.
+   */
+  public fun clear() {
+    clearManager.clear()
+  }
 
-    /**
-     * Shares a log file.
-     */
-    public fun interface ShareManager {
-        public fun share()
-    }
+  /**
+   * Shares a log file.
+   */
+  public fun interface ShareManager {
+    public fun share()
+  }
 
-    /**
-     * Clears a log file.
-     */
-    public fun interface ClearManager {
-        public fun clear()
-    }
+  /**
+   * Clears a log file.
+   */
+  public fun interface ClearManager {
+    public fun clear()
+  }
 }
