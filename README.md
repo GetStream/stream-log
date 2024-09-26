@@ -54,7 +54,7 @@ sourceSets {
 `StreamLog` is a primary log manager, which allows you to install your loggers and print log messages. First, you need to install a `StreamLogger` on `StreamLog`. StreamLog offers a default platform-specific logger that you can install right away by using the code below:
 
 ```kotlin
-KotlinStreamLogger.install(minPriority = Priority.DEBUG, maxTagLength = 23)
+KotlinStreamLogger.installPlatformStreamLogger(minPriority = Priority.DEBUG, maxTagLength = 23)
 ```
 
 Now, you can print log messages simply like the below:
