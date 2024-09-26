@@ -61,7 +61,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines)
-                implementation(libs.kotlinx.datetime)
+                api(libs.kotlinx.datetime)
                 api(libs.okio)
 
                 api(project(":stream-log"))
