@@ -1,7 +1,7 @@
 <h1 align="center">Stream Log</h1></br>
 
 <p align="center">
-🛥 Stream Log is a lightweight and extensible logger library for Kotlin and Android.
+🛥 Stream Log is a lightweight and extensible logger library for Kotlin Multiplatform.
 </p><br>
 
 <p align="center">
@@ -18,13 +18,14 @@
 </p>
 
 ## Why Stream Log?
+
 **Stream Log** originated from [stream-chat-android](https://github.com/getStream/stream-chat-android), and it has already been verified by delivering to billions of global end-users across thousands of different apps. It's simple and easy to use. You can also record and extract the runtime log messages into an external `.txt` file and utilize it to trace your log messages.
 
 <img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
 
 ## Stream Log
 
-**Stream Log** is a lightweight logger and a pure Kotlin module to utilize this library on your Kotlin projects.
+**Stream Log** is a lightweight logger and a pure Kotlin module to utilize this library on your Kotlin Multiplatform projects. It supports Android, iOS, macOS, Jvm
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log%22)
 
@@ -36,18 +37,24 @@ dependencies {
 }
 ```
 
-### StreamLog
-
-`StreamLog` is a primary log manager, which allows you to install your loggers and print log messages. First, you need to install a `StreamLogger` on `StreamLog`. In the Kotlin project, you can install `KotlinStreamLogger` by default, which is a simple logger for Kotlin as seen below:
+If you're targeting on Kotlin Multiplatform, add the dependency below to your module's `build.gradle.kts` file:
 
 ```kotlin
-// install `KotlinStreamLogger`. You only need to do this once.
-StreamLog.install(KotlinStreamLogger())
-
-// change the log validator as your taste. 
-StreamLog.setValidator { priority, _ ->
-  priority.level >= Priority.DEBUG.level
+sourceSets {
+    val commonMain by getting {
+        dependencies {
+            implementation("io.getstream:stream-log:$version")
+        }
+    }
 }
+```
+
+### StreamLog
+
+`StreamLog` is a primary log manager, which allows you to install your loggers and print log messages. First, you need to install a `StreamLogger` on `StreamLog`. StreamLog offers a default platform-specific logger that you can install right away by using the code below:
+
+```kotlin
+KotlinStreamLogger.install(minPriority = Priority.DEBUG, maxTagLength = 23)
 ```
 
 Now, you can print log messages simply like the below:
@@ -79,137 +86,17 @@ val logger by taggedLogger(tag = "Tag")
 
 >**Note**: If you don't specify the `tag` parameter, the tag value will be a class name that is logging currently.
 
-### StreamLogger
-
-`StreamLogger` is a low-level logger interface that can be installed/uninstalled on `StreamLog`. You can create your own logger by extending the `StreamLogger` interface like the below:
-
-```kotlin
-public class MyStreamLogger() : StreamLogger {
-
-    override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
-        
-        // do something here
-        ..
-
-        println(message)
-    }
-}
-```
-
-You can also extend the `KotlinStreamLogger` and customize the behaviors like the below:
-
-```kotlin
-object ErrorStreamLogger : KotlinStreamLogger() {
-
-    override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
-        when (priority) {
-            ERROR, ASSERT -> super.log(priority, tag, message, throwable)
-            else -> { /* NO-OP */ }
-        }
-    }
-}
-```
-
-### CompositeStreamLogger
-
-You can separate roles and behaviors for each different logger and composite the loggers into a single logger with `CompositeStreamLogger`.
-
-```kotlin
-val fileLogger = FileStreamLogger(fileLoggerConfig)
-val androidLogger = AndroidStreamLogger()
-val compositeLogger = CompositeStreamLogger(androidLogger, fileLogger)
-StreamLog.install(compositeLogger)
-```
-
-### Validator
-
-The validator decides whether the log messages should be printed or not. You can set a validator to set the behaviors of your logger.
-
-```kotlin
-// Show log messages if the log priority is DEBUG or more than DEBUG.
-StreamLog.setValidator { priority, tag ->
-    priority.level >= Priority.DEBUG.level
-}
-
-// Show log messages if the tag contains a "main" string.
-StreamLog.setValidator { priority, tag ->
-    tag.contains("main")
-}
-```
-
-<img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
-
-## Stream Log File
-
-**Stream Log File** is an extension library for persisting the log messages into an external `.txt` file.
-
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-file.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log-file%22)
-
-Add the dependency below into your **module**'s `build.gradle` file:
-
-```gradle
-dependencies {
-    implementation("io.getstream:stream-log:$version")
-    debugImplementation("io.getstream:stream-log-file:$version")
-}
-```
-
-### FileStreamLogger
-
-You can persist the log messages that are triggered on runtime with `FileStreamLogger`. To persist your log messages into a file, you should use `FileStreamLogger` with `CompositeStreamLogger` like the example below:
-
-```kotlin
-val fileLoggerConfig = FileStreamLogger.Config(
-    filesDir = fileDirectory, // an internal file directory
-    externalFilesDir = null, // an external file directory. This is an optional.
-    app = FileStreamLogger.Config.App( // application information.
-        versionCode = 1,
-        versionName = "1.0.0"
-    ),
-    device = FileStreamLogger.Config.Device( // device information
-        model = "%s %s".format(Build.MANUFACTURER, Build.DEVICE),
-        androidApiLevel = Build.VERSION.SDK_INT
-    )
-)
-val fileLogger = FileStreamLogger(fileLoggerConfig)
-val kotlinLogger = KotlinStreamLogger()
-val compositeLogger = CompositeStreamLogger(kotlinLogger, fileLogger)
-
-StreamLog.install(compositeLogger)
-```
-
-Then you will get the result `.txt` file below:
-
-```
-======================================================================
-Logs date time: 2022-12-02 21:08:35'288
-Version code: 1
-Version name: 1.0.0
-API level: 10
-Device: Stream's Mac
-======================================================================
-2022-11-30 13:02:29'918 D/              This is a log message
-2022-11-30 13:04:08'577 D/              ChatViewModel initialized
-2022-11-30 13:13:04'640 D/              ChatController initialized
-```
-
 <img align="right" width="140px" src="https://user-images.githubusercontent.com/24237865/205479526-5fa0b5f0-22df-4f02-ac0e-7a7a3e050cdb.png"/>
 
-## Stream Log Android
+### Platform-Specific Stream Logger
 
-**Stream Log Android** is a simple Android logger on top of the **Stream Log**.
+StreamLog provides differnt stream logger depending on the platform below:
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log-android%22)
+- Android: `AndroidStreamLogger`
+- iOS/macOS: `AppleStreamLogger`
+- Jvm: `JvmStreamLogger`
 
-Add the dependency below into your **module**'s `build.gradle` file:
-
-```gradle
-dependencies {
-    implementation("io.getstream:stream-log-android:$version")
-}
-```
-
-### AndroidStreamLogger
+If you want to use Stream Log on your Android project, you can follow the guidelines below.
 
 First, you need to install a logger for Android with `AndroidStreamLogger` like the below:
 
@@ -258,6 +145,142 @@ val logger by taggedLogger(tag = "Tag")
 ```
 
 >**Note**: If you don't specify the `tag` parameter, the tag value will be a class name that is logging currently. In Jetpack Compose, the tag will be the scope's name of Composable functions.
+
+### KotlinStreamLogger
+
+`KotlinStreamLogger` is the low-level logger abstract class of that can be installed/uninstalled on `StreamLog`. So you can simply create your own stream logger and install it like the code below:
+
+```kotlin
+public class MyStreamLogger(
+  private val maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+) : KotlinStreamLogger(), StreamLogger {
+
+  public override val now: () -> LocalDateTime =
+    { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
+
+  override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
+    val now = now.invoke()
+    val jvmTag = tag.takeIf { it.length > maxTagLength }
+      ?.substring(0, maxTagLength)
+      ?: tag
+    val thread = platformThread.run { "$name:$id" }
+    val composed = "$now ($thread) [${priority.stringify()}/$jvmTag]: $message"
+    val finalMessage = throwable?.let {
+      "$composed\n${it.stringify()}"
+    } ?: composed
+    when (priority) {
+      Priority.ERROR, Priority.ASSERT -> printlnError(finalMessage)
+      else -> println(finalMessage)
+    }
+  }
+
+  override fun install(minPriority: Priority, maxTagLength: Int) {}
+}
+
+// install `KotlinStreamLogger`. You only need to do this once.
+StreamLog.install(MyStreamLogger())
+
+// change the log validator as your taste. 
+StreamLog.setValidator { priority, _ ->
+  priority.level >= Priority.DEBUG.level
+}
+```
+
+### CompositeStreamLogger
+
+You can separate roles and behaviors for each different logger and composite the loggers into a single logger with `CompositeStreamLogger`.
+
+```kotlin
+val fileLogger = FileStreamLogger(fileLoggerConfig)
+val androidLogger = AndroidStreamLogger()
+val compositeLogger = CompositeStreamLogger(androidLogger, fileLogger)
+StreamLog.install(compositeLogger)
+```
+
+### Validator
+
+The validator decides whether the log messages should be printed or not. You can set a validator to set the behaviors of your logger.
+
+```kotlin
+// Show log messages if the log priority is DEBUG or more than DEBUG.
+StreamLog.setValidator { priority, tag ->
+    priority.level >= Priority.DEBUG.level
+}
+
+// Show log messages if the tag contains a "main" string.
+StreamLog.setValidator { priority, tag ->
+    tag.contains("main")
+}
+```
+
+<img align="right" width="90px" src="https://user-images.githubusercontent.com/24237865/178630165-76855349-ac04-4474-8bcf-8eb5f8c41095.png"/>
+
+## Stream Log File
+
+**Stream Log File** is an extension library for persisting the log messages into an external `.txt` file.
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-file.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.getstream%22%20AND%20a:%22stream-log-file%22)
+
+Add the dependency below into your **module**'s `build.gradle` file:
+
+```gradle
+dependencies {
+    implementation("io.getstream:stream-log:$version")
+    debugImplementation("io.getstream:stream-log-file:$version")
+}
+```
+
+If you're targeting on Kotlin Multiplatform, add the dependency below to your module's `build.gradle.kts` file:
+
+```kotlin
+sourceSets {
+    val commonMain by getting {
+        dependencies {
+            implementation("io.getstream:stream-log:$version")
+            debugImplementation("io.getstream:stream-log-file:$version")
+        }
+    }
+}
+```
+
+### FileStreamLogger
+
+You can persist the log messages that are triggered on runtime with `FileStreamLogger`. To persist your log messages into a file, you should use `FileStreamLogger` with `CompositeStreamLogger` like the example below:
+
+```kotlin
+val fileLoggerConfig = FileStreamLogger.Config(
+    filesDir = fileDirectory, // an internal file directory
+    externalFilesDir = null, // an external file directory. This is an optional.
+    app = FileStreamLogger.Config.App( // application information.
+        versionCode = 1,
+        versionName = "1.0.0"
+    ),
+    device = FileStreamLogger.Config.Device( // device information
+        model = "%s %s".format(Build.MANUFACTURER, Build.DEVICE),
+        androidApiLevel = Build.VERSION.SDK_INT
+    )
+)
+val fileLogger = FileStreamLogger(fileLoggerConfig)
+val kotlinLogger = KotlinStreamLogger()
+val compositeLogger = CompositeStreamLogger(kotlinLogger, fileLogger)
+
+StreamLog.install(compositeLogger)
+```
+
+Then you will get the result `.txt` file below:
+
+```
+======================================================================
+Logs date time: 2022-12-02 21:08:35'288
+Version code: 1
+Version name: 1.0.0
+API level: 10
+Device: Stream's Mac
+======================================================================
+2022-11-30 13:02:29'918 D/              This is a log message
+2022-11-30 13:04:08'577 D/              ChatViewModel initialized
+2022-11-30 13:13:04'640 D/              ChatController initialized
+```
 
 <img align="right" width="140px" src="https://user-images.githubusercontent.com/24237865/205479526-5fa0b5f0-22df-4f02-ac0e-7a7a3e050cdb.png"/>
 
@@ -334,23 +357,6 @@ Device: samsung beyond1
 2022-11-30 16:36:39'102 D/              main:2 [MainActivity]: onCreate MainActivity
 2022-11-30 16:42:48'987 D/              main:2 [BoxScopeInstance]: Button Clicked!
 2022-11-30 16:42:49'873 D/              main:2 [BoxScopeInstance]: Button Clicked!
-```
-
-## Stream Log BOM
-
-The **Stream Log** Bill of Materials (BOM) lets you manage all of your **Stream Log** library versions by specifying only the BOM’s version.
-
-[![Maven Central](https://img.shields.io/maven-central/v/io.getstream/stream-log-android.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22retrofit-adapters-result%22)
-
-```gradle
-dependencies {
-    implementation("io.getstream:stream-log-bom:$version")
-
-    implementation("io.getstream:stream-log")
-    implementation("io.getstream:stream-log-file")
-    implementation("io.getstream:stream-log-android")
-    implementation("io.getstream:stream-log-android-file")
-}
 ```
 
 <a href="https://getstream.io/chat/compose/tutorial/?utm_source=Github&utm_campaign=Devrel_oss&utm_medium=StreamLog"><img src="https://user-images.githubusercontent.com/24237865/146505581-a79e8f7d-6eda-4611-b41a-d60f0189e7d4.jpeg" align="right" /></a>
