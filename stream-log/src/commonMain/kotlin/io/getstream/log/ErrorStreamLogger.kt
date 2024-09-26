@@ -36,4 +36,7 @@ internal object ErrorStreamLogger : KotlinStreamLogger() {
       else -> { /* NO-OP */ }
     }
   }
+
+  override fun install(minPriority: Priority, maxTagLength: Int) {
+  }
 }

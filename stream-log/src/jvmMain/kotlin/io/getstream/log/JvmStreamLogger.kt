@@ -21,15 +21,20 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-public class JvmStreamLogger : KotlinStreamLogger(), StreamLogger {
+public class JvmStreamLogger(
+  private val maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+) : KotlinStreamLogger(), StreamLogger {
 
   public override val now: () -> LocalDateTime =
     { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
 
   override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?) {
     val now = now.invoke()
+    val jvmTag = tag.takeIf { it.length > maxTagLength }
+      ?.substring(0, maxTagLength)
+      ?: tag
     val thread = platformThread.run { "$name:$id" }
-    val composed = "$now ($thread) [${priority.stringify()}/$tag]: $message"
+    val composed = "$now ($thread) [${priority.stringify()}/$jvmTag]: $message"
     val finalMessage = throwable?.let {
       "$composed\n${it.stringify()}"
     } ?: composed
@@ -37,5 +42,27 @@ public class JvmStreamLogger : KotlinStreamLogger(), StreamLogger {
       Priority.ERROR, Priority.ASSERT -> printlnError(finalMessage)
       else -> println(finalMessage)
     }
+  }
+
+  override fun install(minPriority: Priority, maxTagLength: Int) {
+    JvmStreamLogger.install(
+      minPriority = minPriority,
+      maxTagLength = maxTagLength
+    )
+  }
+
+  public companion object {
+    /**
+     * Install a new [JvmStreamLogger].
+     *
+     * @param minPriority The minimum [Priority] to show up log messages.
+     * @param maxTagLength The maximum length size of the tag.
+     */
+    public fun install(minPriority: Priority = Priority.DEBUG, maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH) {
+      StreamLog.setValidator { priority, _ -> priority.level >= minPriority.level }
+      StreamLog.install(JvmStreamLogger(maxTagLength = maxTagLength))
+    }
+
+    internal const val DEFAULT_MAX_TAG_LENGTH = 23
   }
 }

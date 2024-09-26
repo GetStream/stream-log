@@ -17,8 +17,36 @@ package io.getstream.log
 
 import kotlinx.datetime.LocalDateTime
 
+/**
+ * KotlinStreamLogger the abstraction class of that implements [StreamLogger], and the highest-level of platform-specific
+ * stream loggers.
+ */
 public abstract class KotlinStreamLogger : StreamLogger {
   public abstract val now: () -> LocalDateTime
 
   abstract override fun log(priority: Priority, tag: String, message: String, throwable: Throwable?)
+
+  public abstract fun install(minPriority: Priority = Priority.DEBUG, maxTagLength: Int)
+
+  public companion object {
+
+    /**
+     * Install the platform-specific stream logger.
+     *
+     * Android: AndroidStreamLogger
+     * iOS/macOS: AppleStreamLogger
+     * Jvm: JvmStreamLogger
+     *
+     * @param minPriority The min priority/type of a log message.
+     * @param maxTagLength The max length size of the tag.
+     */
+    public fun installPlatformStreamLogger(
+      minPriority: Priority = Priority.DEBUG,
+      maxTagLength: Int = DEFAULT_MAX_TAG_LENGTH,
+    ) {
+      platformStreamLogger(maxTagLength = maxTagLength).install(minPriority, maxTagLength)
+    }
+
+    private const val DEFAULT_MAX_TAG_LENGTH = 23
+  }
 }

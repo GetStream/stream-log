@@ -18,4 +18,4 @@ package io.getstream.log
 /**
  * Create a default Stream logger based on platforms.
  */
-public expect val platformStreamLogger: KotlinStreamLogger
+internal expect fun platformStreamLogger(maxTagLength: Int): KotlinStreamLogger

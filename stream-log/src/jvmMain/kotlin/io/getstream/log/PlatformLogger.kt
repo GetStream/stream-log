@@ -15,4 +15,6 @@
  */
 package io.getstream.log
 
-public actual val platformStreamLogger: KotlinStreamLogger = JvmStreamLogger()
+internal actual fun platformStreamLogger(maxTagLength: Int): KotlinStreamLogger {
+  return JvmStreamLogger(maxTagLength)
+}
