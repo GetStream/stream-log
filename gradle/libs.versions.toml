@@ -1,9 +1,9 @@
 [versions]
 androidGradlePlugin = "8.8.2"
-androidxActivity = "1.4.0"
-androidxAnnotation = "1.8.2"
-androidxCore = "1.13.1"
-androidxComposeBom = "2024.09.02"
+androidxActivity = "1.10.1"
+androidxAnnotation = "1.9.1"
+androidxCore = "1.15.0"
+androidxComposeBom = "2025.02.00"
 jvmTarget = "11"
 kotlin = "2.0.20"
 dokka = "1.9.0"
