@@ -81,7 +81,7 @@ jobs:
       - name: Unit tests
         run: ./gradlew test
       - name: Upload test results
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v4.4.3
         if: failure()
         with:
           name: testDebugUnitTest
