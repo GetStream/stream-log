@@ -80,7 +80,7 @@ kotlin {
 
 android {
     compileSdk = Configuration.compileSdk
-    namespace = "io.getstream.log"
+    namespace = "io.getstream.log.file"
     defaultConfig {
         minSdk = Configuration.minSdk
     }
