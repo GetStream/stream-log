@@ -22,6 +22,7 @@ import io.getstream.log.Priority.INFO
 import io.getstream.log.Priority.VERBOSE
 import io.getstream.log.Priority.WARN
 import kotlin.concurrent.Volatile
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
 /**
@@ -112,22 +113,10 @@ public object StreamLog {
    * @param message The function returning a message you would like logged.
    */
   @JvmStatic
-  public inline fun e(tag: String, throwable: Throwable, message: () -> String) {
+  @JvmOverloads
+  public inline fun e(tag: String, throwable: Throwable? = null, message: () -> String) {
     if (internalValidator.isLoggable(ERROR, tag)) {
       internalLogger.log(ERROR, tag, message(), throwable)
-    }
-  }
-
-  /**
-   * Send a [ERROR] log message.
-   *
-   * @param tag Used to identify the source of a log message.
-   * @param message The function returning a message you would like logged.
-   */
-  @JvmStatic
-  public inline fun e(tag: String, message: () -> String) {
-    if (internalValidator.isLoggable(ERROR, tag)) {
-      internalLogger.log(ERROR, tag, message())
     }
   }
 
@@ -206,17 +195,13 @@ public object StreamLog {
    */
   @JvmStatic
   public inline fun log(priority: Priority, tag: String, throwable: Throwable? = null, message: () -> String) {
-    if (throwable != null) {
-      e(tag, throwable, message)
-    } else {
-      when (priority) {
-        VERBOSE -> v(tag, message)
-        DEBUG -> d(tag, message)
-        INFO -> i(tag, message)
-        WARN -> w(tag, message)
-        ERROR -> e(tag, message)
-        ASSERT -> a(tag, message)
-      }
+    when (priority) {
+      VERBOSE -> v(tag, message)
+      DEBUG -> d(tag, message)
+      INFO -> i(tag, message)
+      WARN -> w(tag, message)
+      ERROR -> e(tag, throwable, message)
+      ASSERT -> a(tag, message)
     }
   }
 }
@@ -250,20 +235,10 @@ public class TaggedLogger(
    * @param throwable An exception to log.
    * @param message The function returning a message you would like logged.
    */
-  public inline fun e(throwable: Throwable, message: () -> String) {
+  @JvmOverloads
+  public inline fun e(throwable: Throwable? = null, message: () -> String) {
     if (validator.isLoggable(ERROR, tag)) {
       delegate.log(ERROR, tag, message(), throwable)
-    }
-  }
-
-  /**
-   * Send a [ERROR] log message.
-   *
-   * @param message The function returning a message you would like logged.
-   */
-  public inline fun e(message: () -> String) {
-    if (validator.isLoggable(ERROR, tag)) {
-      delegate.log(ERROR, tag, message())
     }
   }
 
