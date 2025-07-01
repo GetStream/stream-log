@@ -24,7 +24,6 @@ import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.io.Writer
@@ -119,17 +118,15 @@ public class FileStreamLogger(
       if (!internalFile.exists()) {
         try {
           internalFile.createNewFile()
-        } catch (e: IOException) {
-          Log.e("FileInit", "Failed to create file: ${internalFile.absolutePath}", e)
+
+          if (internalFile.canWrite()) {
+            currentFile = internalFile
+            currentWriter = internalFile.fileWriter()
+          }
+        } catch (e: Exception) {
+          Log.e("FileInit", "Failed to create or write to file: ${internalFile.absolutePath}", e)
           return
         }
-      }
-
-      if (internalFile.canWrite()) {
-        currentFile = internalFile
-        currentWriter = internalFile.fileWriter()
-      } else {
-        Log.e("FileInit", "File is not writable: ${internalFile.absolutePath}")
       }
     }
   }
