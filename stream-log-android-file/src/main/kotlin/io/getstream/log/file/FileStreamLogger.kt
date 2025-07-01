@@ -15,6 +15,7 @@
  */
 package io.getstream.log.file
 
+import android.util.Log
 import io.getstream.log.Priority
 import io.getstream.log.StreamLogger
 import io.getstream.log.helper.stringify
@@ -23,6 +24,7 @@ import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.io.Writer
@@ -90,8 +92,14 @@ public class FileStreamLogger(
   }
 
   public fun clear(): Unit = executor.execute {
-    internalFile0.writeText("")
-    internalFile1.writeText("")
+
+    if (internalFile0.exists()) {
+      internalFile0.writeText("")
+    }
+
+    if (internalFile1.exists()) {
+      internalFile1.writeText("")
+    }
   }
 
   private fun initIfNeeded() {
@@ -101,8 +109,28 @@ public class FileStreamLogger(
         internalFile0.lastModified() > internalFile1.lastModified() -> internalFile0
         else -> internalFile1
       }
-      currentFile = internalFile
-      currentWriter = internalFile.fileWriter()
+      /**
+       * On some Android 11+ devices (especially Chinese OEMs), we observed that creating files
+       * using File(...) and createNewFile() can fail unexpectedly (background/doze modes/RAM cleaning/device cleanup utilities) with FileNotFoundException or EINVAL,
+       * even when writing to internal storage.
+       * This helper ensures safe creation of files by handling edge cases and logging issues to improve
+       * stability across all devices.
+       */
+      if (!internalFile.exists()) {
+        try {
+          internalFile.createNewFile()
+        } catch (e: IOException) {
+          Log.e("FileInit", "Failed to create file: ${internalFile.absolutePath}", e)
+          return
+        }
+      }
+
+      if (internalFile.canWrite()) {
+        currentFile = internalFile
+        currentWriter = internalFile.fileWriter()
+      } else {
+        Log.e("FileInit", "File is not writable: ${internalFile.absolutePath}")
+      }
     }
   }
 
