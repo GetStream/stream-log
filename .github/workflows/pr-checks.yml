@@ -19,11 +19,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3.6.0
-        with:
-          distribution: adopt
-          java-version: 17
+      - uses: GetStream/android-ci-actions/actions/setup-java@main
       - uses: ./.github/actions/gradle-cache
         with:
           key-prefix: gradle-lint
@@ -36,11 +32,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3.6.0
-        with:
-          distribution: adopt
-          java-version: 17
+      - uses: GetStream/android-ci-actions/actions/setup-java@main
       - uses: ./.github/actions/gradle-cache
         with:
           key-prefix: gradle-APICheck
@@ -53,11 +45,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3.6.0
-        with:
-          distribution: adopt
-          java-version: 17
+      - uses: GetStream/android-ci-actions/actions/setup-java@main
       - uses: ./.github/actions/gradle-cache
         with:
           key-prefix: gradle-build
@@ -70,11 +58,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3.6.0
-        with:
-          distribution: adopt
-          java-version: 17
+      - uses: GetStream/android-ci-actions/actions/setup-java@main
       - uses: ./.github/actions/gradle-cache
         with:
           key-prefix: gradle-test
