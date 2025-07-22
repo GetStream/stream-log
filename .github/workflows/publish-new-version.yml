@@ -13,7 +13,7 @@ on:
 
 jobs:
   publish:
-    uses: GetStream/android-ci-actions/.github/workflows/release-new-version.yml@v0.2
+    uses: GetStream/android-ci-actions/.github/workflows/release-new-version.yml@v0.4
     with:
       ref: "develop"
       bump: ${{ inputs.bump }}
