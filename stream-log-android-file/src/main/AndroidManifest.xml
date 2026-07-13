@@ -19,6 +19,7 @@
     >
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application>
 
@@ -26,6 +27,7 @@
             android:name=".StreamLogFileService"
             android:enabled="true"
             android:exported="true"
+            android:foregroundServiceType="dataSync"
             >
 
             <intent-filter>
