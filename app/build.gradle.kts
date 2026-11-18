@@ -15,7 +15,7 @@ android {
         minSdk = Configuration.minSdk
         targetSdk = Configuration.targetSdk
         versionCode = 1
-        versionName = Configuration.versionName
+        versionName = project.version.toString()
     }
 
     buildFeatures {
