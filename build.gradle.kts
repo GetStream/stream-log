@@ -1,3 +1,5 @@
+import org.gradle.api.publish.PublishingExtension
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -36,6 +38,20 @@ subprojects {
             licenseHeaderFile(rootProject.file("spotless/copyright.xml"), "(<[^!?])")
             trimTrailingWhitespace()
             endWithNewline()
+        }
+    }
+}
+
+// The release workflow uploads this tree to the Stream Maven repository.
+subprojects {
+    pluginManager.withPlugin("com.vanniktech.maven.publish") {
+        extensions.configure<PublishingExtension> {
+            repositories {
+                maven {
+                    name = "streamRepoStaging"
+                    url = rootProject.layout.buildDirectory.dir("staged-repo").get().asFile.toURI()
+                }
+            }
         }
     }
 }
