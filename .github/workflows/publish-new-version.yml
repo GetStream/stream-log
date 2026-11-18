@@ -11,24 +11,29 @@ on:
           - minor
           - major
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
 jobs:
   publish:
-    uses: GetStream/android-ci-actions/.github/workflows/release-new-version.yml@v0.4
+    uses: GetStream/stream-build-conventions-android/.github/workflows/release.yml@500ef3b1a9a1823213f37cf269ef409042f7c7d2 # v1.2.0
     with:
-      ref: "develop"
+      release-bot-client-id: ${{ vars.ANDROID_RELEASE_BOT_CLIENT_ID }}
       bump: ${{ inputs.bump }}
-      file-path: ./buildSrc/src/main/kotlin/io/getstream/log/Configuration.kt
-      use-official-plugin: false
-      excluded-modules: "app"
-      documentation-tasks: "sourcesJar"
+      publish-targets: streamRepo
     secrets:
-      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
-      STREAM_PUBLIC_BOT_TOKEN: ${{ secrets.STREAM_PUBLIC_BOT_TOKEN }}
+      release-bot-private-key: ${{ secrets.ANDROID_RELEASE_BOT_PRIVATE_KEY }}
+      maven-central-username: ${{ secrets.OSSRH_USERNAME }}
+      maven-central-password: ${{ secrets.OSSRH_PASSWORD }}
+      signing-key: ${{ secrets.SIGNING_KEY }}
+      signing-key-id: ${{ secrets.SIGNING_KEY_ID }}
+      signing-key-password: ${{ secrets.SIGNING_PASSWORD }}
+      slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_ANDROID_CICD }}
+      stream-repo-endpoint: ${{ secrets.STREAM_REPO_ENDPOINT }}
+      stream-repo-bucket: ${{ secrets.STREAM_REPO_BUCKET }}
+      stream-repo-access-key-id: ${{ secrets.STREAM_REPO_ACCESS_KEY_ID }}
+      stream-repo-secret-access-key: ${{ secrets.STREAM_REPO_SECRET_ACCESS_KEY }}
