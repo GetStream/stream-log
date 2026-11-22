@@ -115,18 +115,18 @@ public class FileStreamLogger(
        * This helper ensures safe creation of files by handling edge cases and logging issues to improve
        * stability across all devices.
        */
-      if (!internalFile.exists()) {
-        try {
+      try {
+        if (!internalFile.exists()) {
           internalFile.createNewFile()
-
-          if (internalFile.canWrite()) {
-            currentFile = internalFile
-            currentWriter = internalFile.fileWriter()
-          }
-        } catch (e: Exception) {
-          Log.e("FileInit", "Failed to create or write to file: ${internalFile.absolutePath}", e)
-          return
         }
+
+        if (internalFile.canWrite()) {
+          currentFile = internalFile
+          currentWriter = internalFile.fileWriter()
+        }
+      } catch (e: Exception) {
+        Log.e("FileInit", "Failed to create or write to file: ${internalFile.absolutePath}", e)
+        return
       }
     }
   }
