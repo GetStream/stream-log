@@ -17,7 +17,7 @@ permissions:
 jobs:
   lint:
     name: ktlint
-    runs-on: { group: scaleway-macos }
+    runs-on: { group: github-public-amd64 }
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
@@ -30,7 +30,7 @@ jobs:
 
   api_check:
     name: API check
-    runs-on: { group: scaleway-macos }
+    runs-on: { group: github-public-amd64 }
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
@@ -43,7 +43,7 @@ jobs:
 
   debug_build:
     name: Debug build
-    runs-on: { group: scaleway-macos }
+    runs-on: { group: github-public-amd64 }
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
@@ -56,7 +56,7 @@ jobs:
 
   test:
     name: Unit tests
-    runs-on: { group: scaleway-macos }
+    runs-on: { group: github-public-amd64 }
     steps:
       - name: Check out code
         uses: actions/checkout@v3.1.0
